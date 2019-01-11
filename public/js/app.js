@@ -143,8 +143,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -1937,7 +1935,7 @@ var render = function() {
           ref: "linkOptions",
           attrs: {
             size: "lg",
-            title: "Link options for " + this.currentEmail.email,
+            title: "Link options for " + _vm.currentEmail.email,
             "ok-only": "",
             "ok-variant": "secondary",
             "ok-title": "Close"
@@ -1946,30 +1944,41 @@ var render = function() {
         [
           _c("h4", [_vm._v("# Email Link")]),
           _vm._v(" "),
-          _c("pre", [_c("code", [_vm._v(_vm._s(this.currentEmail.link))])]),
+          _c("b-form-input", {
+            attrs: { readonly: "" },
+            model: {
+              value: _vm.currentEmail.link,
+              callback: function($$v) {
+                _vm.$set(_vm.currentEmail, "link", $$v)
+              },
+              expression: "currentEmail.link"
+            }
+          }),
           _vm._v(" "),
           _c("h4", [_vm._v("# HTML Code for the email link")]),
           _vm._v(" "),
-          _c("pre", [
-            _c("code", [
-              _vm._v(
-                '<a href="' +
-                  _vm._s(this.currentEmail.link) +
-                  '" \ntarget="__blank>\n    Reveal ' +
-                  _vm._s(this.currentEmail.email) +
-                  "\n</a>"
-              )
-            ])
-          ]),
-          _vm._v("\n        Example: "),
+          _c("b-form-textarea", {
+            attrs: {
+              rows: 3,
+              readonly: "",
+              value:
+                "<a href='" +
+                _vm.currentEmail.link +
+                "' target='__blank'>Reveal " +
+                _vm.currentEmail.email +
+                "</a>"
+            }
+          }),
+          _vm._v("\n        \n        Example: "),
           _c("samp", [
             _c(
               "a",
-              { attrs: { href: this.currentEmail.link, target: "__blank" } },
-              [_vm._v("Reveal " + _vm._s(this.currentEmail.email))]
+              { attrs: { href: _vm.currentEmail.link, target: "__blank" } },
+              [_vm._v("Reveal " + _vm._s(_vm.currentEmail.email))]
             )
           ])
-        ]
+        ],
+        1
       )
     ],
     1

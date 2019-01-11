@@ -47,17 +47,15 @@
                 </div>
             </div>
         </div>
-        <b-modal size="lg" ref="linkOptions" :title="'Link options for '+this.currentEmail.email" ok-only ok-variant="secondary" ok-title="Close">
+        <b-modal size="lg" ref="linkOptions" :title="'Link options for '+currentEmail.email" ok-only ok-variant="secondary" ok-title="Close">
 
             <h4># Email Link</h4>
-            <pre><code>{{this.currentEmail.link}}</code></pre>
+            <b-form-input readonly v-model="currentEmail.link"></b-form-input>
 
             <h4># HTML Code for the email link</h4>
-            <pre><code>&lt;a href="{{this.currentEmail.link}}" 
-    target="__blank&gt;
-        Reveal {{this.currentEmail.email}}
-    &lt;/a&gt;</code></pre>
-            Example: <samp><a :href="this.currentEmail.link" target="__blank">Reveal {{this.currentEmail.email}}</a></samp>
+            <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>Reveal '+currentEmail.email+'</a>'"></b-form-textarea>
+            
+            Example: <samp><a :href="currentEmail.link" target="__blank">Reveal {{currentEmail.email}}</a></samp>
         </b-modal>
     </div>
 </template>
