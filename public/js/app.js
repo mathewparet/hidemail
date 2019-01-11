@@ -156,7 +156,7 @@ __webpack_require__.r(__webpack_exports__);
       loading: null,
       emails: {},
       currentEmail: {},
-      fields: ['email', 'action'],
+      fields: ['email', 'created_at', 'action'],
       filterString: '',
       hideEmailForm: new _mathewparet_form_error_control__WEBPACK_IMPORTED_MODULE_0__["default"]({
         email: null
@@ -1821,7 +1821,7 @@ var render = function() {
                                 {
                                   staticClass: "card-link",
                                   attrs: {
-                                    href: "/email/" + data.item.uuid,
+                                    href: data.item.link,
                                     target: "__blank"
                                   }
                                 },

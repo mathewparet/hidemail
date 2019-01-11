@@ -18,6 +18,10 @@ class Email extends Model
         parent::__construct($attributes);
     }
 
+    protected $casts = [
+        'created_at' => 'datetime:M d, Y H:i:s'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
