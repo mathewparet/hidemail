@@ -9,25 +9,55 @@ class Email extends Model
 {
     protected $fillable = ['email'];
 
-    function __construct($attributes = [])
+    protected $appends = ['link'];
+
+    public function __construct($attributes = [])
     {
         $this->uuid = Str::uuid();
 
         parent::__construct($attributes);
     }
 
-    function user()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    function setEmailAttribute($value)
+    // function setEmailAttribute($value)
+    // {
+    //     $this->attributes['email'] = encrypt($value);
+    // }
+
+    public function getRouteKeyName()
     {
-        $this->attributes['email'] = encrypt($value);
+        return "uuid";
     }
 
-    function getEmailAttribute()
+    public function getEmailAttribute()
     {
-        return decrypt($this->attributes['email']);
+        return $this->obfuscate($this->attributes['email']);
     }
+
+    public function scopeLike($query, $value)
+    {
+        return $query->where('email','like','%'.strtolower($value).'%');
+    }
+
+    public function getLinkAttribute()
+    {
+        return __(':url/emails/:uuid', [
+            'url'=>config('app.url')
+            , 'uuid'=>$this->uuid]
+        );
+    }
+
+    private function obfuscate($email)
+    {
+        $em   = explode("@",$email);
+        $name = implode(array_slice($em, 0, count($em)-1), '@');
+        $len  = floor(strlen($name)/2);
+
+        return substr($name,0, $len) . str_repeat('*', $len) . "@" . end($em);   
+    }
+
 }

@@ -24,10 +24,12 @@
         "vue-template-compiler": "^2.5.21"
     },
     "dependencies": {
+        "@mathewparet/form-error-control": "^1.0.2",
         "@mathewparet/vue-common-filters": "^1.0.2",
         "@mathewparet/vue-filter-box": "^1.0.4",
         "@mathewparet/vue-recaptcha-invisible": "^1.0.9",
         "bootstrap-vue": "^2.0.0-rc.11",
+        "laravel-vue-pagination": "^2.2.0",
         "vue-awesome-notifications": "^2.2.9",
         "vue-content-loader": "^0.2.1",
         "vue-router": "^3.0.2"

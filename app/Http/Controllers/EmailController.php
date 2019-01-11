@@ -12,9 +12,11 @@ class EmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $emails = auth()->user()->emails();
+        if($request->filled('filter')) $emails = $emails->like($request->query('filter'));
+        $emails = $emails->orderBy('email','asc')->paginate(config('app.page'));
 
         return compact('emails');
     }
@@ -29,12 +31,12 @@ class EmailController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|unique:emails|unique:users'
+            'email' => 'required|email|unique:emails'
         ]);
 
         $email = auth()->user()->addEmail(new Email(['email'=>$request->email]));
 
-        return response(['message'=>'Email successfully added', 'email'=>$email]);
+        return response(['message'=>__(':email successfully added', ['email'=>$email->email]), 'email'=>$email]);
     }
 
     /**
@@ -45,7 +47,7 @@ class EmailController extends Controller
      */
     public function show(Email $email)
     {
-        $this->authorize($email);
+        $this->authorize('show', $email);
 
         return compact('email');
     }
@@ -58,7 +60,7 @@ class EmailController extends Controller
      */
     public function destroy(Email $email)
     {
-        $this->authorize($email);
+        $this->authorize('destroy', $email);
 
         $email->delete();
 
