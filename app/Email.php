@@ -9,7 +9,9 @@ class Email extends Model
 {
     protected $fillable = ['email'];
 
-    protected $appends = ['link'];
+    protected $hidden = ['email', 'email_hash'];
+
+    protected $appends = ['link','hidden_email'];
 
     public function __construct($attributes = [])
     {
@@ -27,19 +29,25 @@ class Email extends Model
         return $this->belongsTo(User::class);
     }
 
-    // function setEmailAttribute($value)
-    // {
-    //     $this->attributes['email'] = encrypt($value);
-    // }
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email'] = encrypt($value);
+        $this->attributes['email_hash'] = md5($value);
+    }
+
+    public function getEmailAttribute()
+    {
+        return decrypt($this->attributes['email']);
+    }
 
     public function getRouteKeyName()
     {
         return "uuid";
     }
 
-    public function getEmailAttribute()
+    public function getHiddenEmailAttribute()
     {
-        return $this->obfuscate($this->attributes['email']);
+        return $this->obfuscate($this->email);
     }
 
     public function scopeLike($query, $value)

@@ -30,9 +30,12 @@ Vue.use(Router);
 import routes from './routes.def.js'
 
 import Sidebar from './components/Sidebar.vue';
-import {FacebookLoader, BulletListLoader} from 'vue-content-loader';
+import {FacebookLoader, BulletListLoader, ContentLoader} from 'vue-content-loader';
 Vue.component('bullet-list-loader', BulletListLoader);
 Vue.component('facebook-loader', FacebookLoader);
+Vue.component('content-loader', ContentLoader);
+
+import EmailRevealForm from './components/emails/EmailRevealForm';
 
 const app = new Vue({
     el: '#app',
@@ -42,5 +45,7 @@ const app = new Vue({
     }),
     components: {
         Sidebar,
+        EmailRevealForm,
+        ContentLoader
     }
 });

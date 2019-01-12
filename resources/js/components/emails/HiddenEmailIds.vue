@@ -28,8 +28,8 @@
                     </form>
                     <bullet-list-loader :step=2 :animate="true" v-if="this.loading === true"/>
                     <b-table v-else-if="this.emails.data && this.emails.data.length > 0" hover :items="this.emails.data" :fields="this.fields" caption="Your hidden email Ids" caption-top>
-                        <template slot="email" slot-scope="data">
-                            <a :href="data.item.link" target="__blank" class="card-link">{{data.item.email}}</a>
+                        <template slot="hidden_email" slot-scope="data">
+                            <a :href="data.item.link" target="__blank" class="card-link">{{data.item.hidden_email}}</a>
                         </template>
                         <template slot="action" slot-scope="data">
                             <b-button-group size="sm">
@@ -53,9 +53,9 @@
             <b-form-input readonly v-model="currentEmail.link"></b-form-input>
 
             <h4># HTML Code for the email link</h4>
-            <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>Reveal '+currentEmail.email+'</a>'"></b-form-textarea>
+            <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>Reveal '+currentEmail.hidden_email+'</a>'"></b-form-textarea>
             
-            Example: <samp><a :href="currentEmail.link" target="__blank">Reveal {{currentEmail.email}}</a></samp>
+            Example: <samp><a :href="currentEmail.link" target="__blank">Reveal {{currentEmail.hidden_email}}</a></samp>
         </b-modal>
     </div>
 </template>
@@ -75,9 +75,16 @@
                 emails: {},
                 currentEmail: {},
                 fields: [
-                    'email',
-                    'created_at',
-                    'action'
+                    {
+                        key: 'hidden_email',
+                        label: 'Email',
+                    },
+                    {
+                        key: 'created_at',
+                    },
+                    {
+                        key: 'action'
+                    }
                 ],
                 filterString: '',
                 hideEmailForm: new Form({
@@ -97,11 +104,11 @@
             },
             deleteEmail(email)
             {
-                if(confirm(`This action is irrevokable. You can add back the email later, but the link will changge.\n\nEmail ID: ${email.email} will be deleted.`))
+                if(confirm(`This action is irrevokable. You can add back the email later, but the link will changge.\n\nEmail ID: ${email.hidden_email} will be deleted.`))
                 {
                     axios.delete(`/api/emails/${email.uuid}`)
                         .then(response => {
-                            this.$awn.success(`${email.email} removed`);
+                            this.$awn.success(`${email.hidden_email} removed`);
                             this.loadEmails();
                         })
                         .catch(error => this.$awn.alert(error.message));

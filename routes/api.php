@@ -19,3 +19,5 @@ Route::middleware(['auth:api'])->group(function() {
     Route::resource('/emails', 'EmailController');
 
 });
+
+Route::post('/emails/{email}','RevealEmailController@reveal')->name('emails.check');

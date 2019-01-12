@@ -15,6 +15,7 @@ class MakeEmailsUserIdOptional extends Migration
     {
         Schema::table('emails', function(Blueprint $table) {
             $table->integer('user_id')->unsigned()->nullable()->change();
+            $table->string('email_hash')->unique();
         });
     }
 
@@ -27,6 +28,7 @@ class MakeEmailsUserIdOptional extends Migration
     {
         Schema::table('emails', function(Blueprint $table) {
             $table->integer('user_id')->unsigned()->nullable(false)->change();
+            $table->dropColumn('email_hash');
         });
     }
 }

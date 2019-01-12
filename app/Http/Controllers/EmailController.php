@@ -64,6 +64,6 @@ class EmailController extends Controller
 
         $email->delete();
 
-        return response(['messsage'=>__('Succcessfully deleted :email', ['email'=>$email->email])]);
+        return response(['messsage'=>__('Succcessfully deleted :email', ['email'=>$email->hidden_email])]);
     }
 }
