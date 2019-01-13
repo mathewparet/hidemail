@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Email;
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateHiddenEmailIdRequest;
 
 class EmailController extends Controller
 {
@@ -28,15 +29,13 @@ class EmailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateHiddenEmailIdRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|unique:emails'
-        ]);
+        $this->authorize('store', Email::class);
+        
+        $email = $request->user()->addEmail(new Email(['email'=>$request->email]));
 
-        $email = auth()->user()->addEmail(new Email(['email'=>$request->email]));
-
-        return response(['message'=>__(':email successfully added', ['email'=>$email->email]), 'email'=>$email]);
+        return response(['message'=>__('Email ID successfully added'), 'email'=>$email]);
     }
 
     /**

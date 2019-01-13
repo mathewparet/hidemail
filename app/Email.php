@@ -9,7 +9,7 @@ class Email extends Model
 {
     protected $fillable = ['email'];
 
-    protected $hidden = ['email', 'email_hash'];
+    protected $hidden = ['email','updated_at','user_id','id'];
 
     protected $appends = ['link','hidden_email'];
 
@@ -32,7 +32,6 @@ class Email extends Model
     public function setEmailAttribute($value)
     {
         $this->attributes['email'] = encrypt($value);
-        $this->attributes['email_hash'] = md5($value);
     }
 
     public function getEmailAttribute()

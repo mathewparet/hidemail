@@ -33,10 +33,11 @@ class AuthServiceProvider extends ServiceProvider
         Passport::routes();
 
         Passport::tokensCan([
-            'create-email' => 'Create and access your hidden email Ids',
-            'delete-email' => 'Delete your hidden email Ids'
+            'view-hidden-email-ids' => 'View your hidden email Ids',
+            'create-hidden-email-ids' => 'Create hidden email Ids',
+            'delete-hidden-email-ids' => 'Delete your hidden email Ids'
         ]);
 
-        Passport::setDefaultScope(['create-email']);
+        Passport::setDefaultScope(['view-hidden-email-ids']);
     }
 }
