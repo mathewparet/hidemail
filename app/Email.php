@@ -31,7 +31,7 @@ class Email extends Model
 
     public function setEmailAttribute($value)
     {
-        $this->attributes['email'] = encrypt($value);
+        $this->attributes['email'] = encrypt(strtolower($value));
     }
 
     public function getEmailAttribute()

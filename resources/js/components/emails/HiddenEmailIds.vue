@@ -53,9 +53,9 @@
             <b-form-input readonly v-model="currentEmail.link"></b-form-input>
 
             <h4># HTML Code for the email link</h4>
-            <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>Reveal '+currentEmail.hidden_email+'</a>'"></b-form-textarea>
+            <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>'+currentEmail.hidden_email+'</a>'"></b-form-textarea>
             
-            Example: <samp><a :href="currentEmail.link" target="__blank">Reveal {{currentEmail.hidden_email}}</a></samp>
+            Example: <samp><a :href="currentEmail.link" target="__blank">{{currentEmail.hidden_email}}</a></samp>
         </b-modal>
     </div>
 </template>

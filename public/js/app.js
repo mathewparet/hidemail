@@ -2220,7 +2220,7 @@ var render = function() {
               value:
                 "<a href='" +
                 _vm.currentEmail.link +
-                "' target='__blank'>Reveal " +
+                "' target='__blank'>" +
                 _vm.currentEmail.hidden_email +
                 "</a>"
             }
@@ -2230,7 +2230,7 @@ var render = function() {
             _c(
               "a",
               { attrs: { href: _vm.currentEmail.link, target: "__blank" } },
-              [_vm._v("Reveal " + _vm._s(_vm.currentEmail.hidden_email))]
+              [_vm._v(_vm._s(_vm.currentEmail.hidden_email))]
             )
           ])
         ],
