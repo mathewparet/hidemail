@@ -6,7 +6,7 @@
                     <i class="fas fa-at"></i> My Hidden Email IDs
                 </span>
                 <span class="float-right">
-                    <filter-box class="form-control form-control-sm" @filter="loadEmails" v-model="filterString"/>
+                    <filter-box class="form-control form-control-sm" @filter="loadEmails" v-model="filterString" title="Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive." v-b-tooltip/>
                 </span>
             </div>
             <div class="card-body">
@@ -38,8 +38,13 @@
                             </b-button-group>
                         </template>
                     </b-table>
-                    <div v-else class="text-center">
-                        You have not hidden any email IDs <span v-if="filterString.length > 0">that matches <em class="text-info">{{filterString}}</em> <a title="Remove filter" v-b-tooltip class="action-link card-link" @click="()=>{this.filterString = '';}"><i class="fas fa-times-circle"></i></a></span>.
+                    <div v-else>
+                        <div class="text-center mb-2">
+                            You have not hidden any email IDs <span v-if="filterString.length > 0">that matches <em class="text-info">{{filterString}}</em> <a title="Remove filter" v-b-tooltip class="action-link card-link" @click="()=>{this.filterString = '';}"><i class="fas fa-times-circle"></i></a></span>.
+                        </div>
+                         <b-alert show v-if="filterString.length > 0">
+                            Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive.
+                         </b-alert>
                     </div>
                     <div class="text-center">
                         <pagination :data="emails" @pagination-change-page="loadEmails" :limit=2></pagination>

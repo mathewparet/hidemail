@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use RBennett\ModelEncryption\HasEncryptedAttributes;
 
 class Email extends Model
 {
+    use HasEncryptedAttributes;
+
     protected $fillable = ['email'];
 
     protected $hidden = ['email','updated_at','user_id','id'];
@@ -24,19 +27,16 @@ class Email extends Model
         'created_at' => 'datetime:M d, Y H:i:s'
     ];
 
+    protected $encrypted = [
+        'email' =>
+            ['type' => 'string', 'hasBlindIndex' => 'email_bi'],
+    ];
+
+    protected $hashed = [];
+
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function setEmailAttribute($value)
-    {
-        $this->attributes['email'] = encrypt(strtolower($value));
-    }
-
-    public function getEmailAttribute()
-    {
-        return decrypt($this->attributes['email']);
     }
 
     public function getRouteKeyName()
@@ -51,7 +51,7 @@ class Email extends Model
 
     public function scopeLike($query, $value)
     {
-        return $query->where('email','like','%'.strtolower($value).'%');
+        return $query->whereBI(['email'=>strtolower($value)]);
     }
 
     public function getLinkAttribute()

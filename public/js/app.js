@@ -258,6 +258,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -1944,7 +1949,12 @@ var render = function() {
             { staticClass: "float-right" },
             [
               _c("filter-box", {
+                directives: [{ name: "b-tooltip", rawName: "v-b-tooltip" }],
                 staticClass: "form-control form-control-sm",
+                attrs: {
+                  title:
+                    "Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive."
+                },
                 on: { filter: _vm.loadEmails },
                 model: {
                   value: _vm.filterString,
@@ -2136,37 +2146,58 @@ var render = function() {
                         }
                       ])
                     })
-                  : _c("div", { staticClass: "text-center" }, [
-                      _vm._v(
-                        "\n                    You have not hidden any email IDs "
-                      ),
-                      _vm.filterString.length > 0
-                        ? _c("span", [
-                            _vm._v("that matches "),
-                            _c("em", { staticClass: "text-info" }, [
-                              _vm._v(_vm._s(_vm.filterString))
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                directives: [
-                                  { name: "b-tooltip", rawName: "v-b-tooltip" }
-                                ],
-                                staticClass: "action-link card-link",
-                                attrs: { title: "Remove filter" },
-                                on: {
-                                  click: function() {
-                                    this$1.filterString = ""
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "fas fa-times-circle" })]
-                            )
-                          ])
-                        : _vm._e(),
-                      _vm._v(".\n                ")
-                    ]),
+                  : _c(
+                      "div",
+                      [
+                        _c("div", { staticClass: "text-center mb-2" }, [
+                          _vm._v(
+                            "\n                        You have not hidden any email IDs "
+                          ),
+                          _vm.filterString.length > 0
+                            ? _c("span", [
+                                _vm._v("that matches "),
+                                _c("em", { staticClass: "text-info" }, [
+                                  _vm._v(_vm._s(_vm.filterString))
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "b-tooltip",
+                                        rawName: "v-b-tooltip"
+                                      }
+                                    ],
+                                    staticClass: "action-link card-link",
+                                    attrs: { title: "Remove filter" },
+                                    on: {
+                                      click: function() {
+                                        this$1.filterString = ""
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-times-circle"
+                                    })
+                                  ]
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(".\n                    ")
+                        ]),
+                        _vm._v(" "),
+                        _vm.filterString.length > 0
+                          ? _c("b-alert", { attrs: { show: "" } }, [
+                              _vm._v(
+                                "\n                        Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive.\n                     "
+                              )
+                            ])
+                          : _vm._e()
+                      ],
+                      1
+                    ),
               _vm._v(" "),
               _c(
                 "div",

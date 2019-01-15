@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "fac01f261dd5aabf393309d3c318b27e",
+    "content-hash": "117629fc0cf51b992cff837a40f2686a",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -2626,6 +2626,39 @@
                 "uuid"
             ],
             "time": "2018-07-19T23:38:55+00:00"
+        },
+        {
+            "name": "rbennett/laravel-model-encryption",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/howya/laravel_model_encryption.git",
+                "reference": "c5f3f431a110984814a8fc694670044c4aeacd0e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/howya/laravel_model_encryption/zipball/c5f3f431a110984814a8fc694670044c4aeacd0e",
+                "reference": "c5f3f431a110984814a8fc694670044c4aeacd0e",
+                "shasum": ""
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RBennett\\ModelEncryption\\": "src/Models/Traits/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Rob Bennett",
+                    "email": "rjben@hotmail.com"
+                }
+            ],
+            "description": "A no fuss Laravel model trait to add encrypted model attributes with the option of blind indexes and hashed attributes.",
+            "time": "2018-05-04T15:03:05+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
