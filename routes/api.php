@@ -13,6 +13,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware(['auth:api'])->group(function() { 
+    Route::get('/user/info', 'UserController@info')->name('user.info');
+
+    Route::resource('/emails', 'EmailController', ['except'=>[
+        'update',
+        'edit',
+        'create',
+        'show'
+    ]]);
+
+    Route::fallback(function(){
+        return response()->json(['message' => 'Not Found.'], 404);
+    })->name('api.fallback.404');
+
 });
+
+Route::post('/emails/{email}','RevealEmailController@reveal')->name('emails.check');

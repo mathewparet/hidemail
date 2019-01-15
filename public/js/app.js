@@ -69,15 +69,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/index.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/index.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/EmailRevealForm.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
 //
 //
 //
@@ -90,16 +91,255 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      actualEmail: null
+    };
+  },
+  props: {
+    email: {
+      required: true,
+      type: String
+    }
+  },
+  methods: {
+    onVerified: function onVerified(response) {
+      var _this = this;
+
+      axios.post("/api/emails/".concat(this.email), {
+        'g-recaptcha-response': response
+      }).then(function (response) {
+        _this.actualEmail = response.data.email;
+      });
+    },
+    autoSubmit: function autoSubmit(id) {
+      this.$refs.recap.execute();
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mathewparet_form_error_control__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mathewparet/form-error-control */ "./node_modules/@mathewparet/form-error-control/src/form.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! laravel-vue-pagination */ "./node_modules/laravel-vue-pagination/dist/laravel-vue-pagination.common.js");
+/* harmony import */ var laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mathewparet/vue-filter-box */ "./node_modules/@mathewparet/vue-filter-box/src/FilterBox.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    FilterBox: _mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Pagination: laravel_vue_pagination__WEBPACK_IMPORTED_MODULE_1___default.a
+  },
   data: function data() {
     return {
       loading: null,
-      emails: []
+      emails: {},
+      currentEmail: {},
+      fields: [{
+        key: 'hidden_email',
+        label: 'Email'
+      }, {
+        key: 'created_at'
+      }, {
+        key: 'action'
+      }],
+      filterString: '',
+      hideEmailForm: new _mathewparet_form_error_control__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        email: null
+      })
     };
   },
+  mounted: function mounted() {
+    this.$refs.emailField.focus();
+  },
   methods: {
+    showLinkOptions: function showLinkOptions(email) {
+      this.currentEmail = email;
+      this.$refs.linkOptions.show();
+    },
+    deleteEmail: function deleteEmail(email) {
+      var _this = this;
+
+      if (confirm("This action is irrevokable. You can add back the email later, but the link will changge.\n\nEmail ID: ".concat(email.hidden_email, " will be deleted."))) {
+        axios.delete("/api/emails/".concat(email.uuid)).then(function (response) {
+          _this.$awn.success("".concat(email.hidden_email, " removed"));
+
+          _this.loadEmails();
+        }).catch(function (error) {
+          return _this.$awn.alert(error.message);
+        });
+      }
+    },
+    addEmail: function addEmail(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+      this.hideEmailForm.post('/api/emails').then(function (response) {
+        _this2.$awn.success(response.message);
+
+        _this2.loadEmails();
+
+        _this2.hideEmailForm.reset();
+      }).catch(function (error) {
+        _this2.$awn.alert(error.message);
+      }).finally(function () {
+        return _this2.$refs.emailField.focus();
+      });
+    },
     loadEmails: function loadEmails() {
-      axios.get('/api/emails');
+      var _this3 = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var filter = this.filterString == null ? '' : this.filterString;
+      this.loading = true;
+      axios.get("/api/emails?page=".concat(page, "&filter=").concat(filter)).then(function (response) {
+        _this3.emails = response.data.emails;
+      }).catch(function (error) {
+        return _this3.$awn.alert(error.message);
+      }).finally(function () {
+        return _this3.loading = false;
+      });
     }
   }
 });
@@ -747,6 +987,23 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*
    * The component's data.
@@ -762,7 +1019,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         name: '',
         scopes: [],
         errors: []
-      }
+      },
+      domain: null
     };
   },
 
@@ -778,6 +1036,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    */
   mounted: function mounted() {
     this.prepareComponent();
+    this.domain = window.location.hostname;
   },
   methods: {
     /**
@@ -895,10 +1154,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -907,7 +1166,26 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.action-link[data-v-11cf4be5] {\n    cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n@keyframes lds-eclipse {\n0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n}\n50% {\n    -webkit-transform: rotate(180deg);\n    transform: rotate(180deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n}\n}\n@-webkit-keyframes lds-eclipse {\n0% {\n    -webkit-transform: rotate(0deg);\n    transform: rotate(0deg);\n}\n50% {\n    -webkit-transform: rotate(180deg);\n    transform: rotate(180deg);\n}\n100% {\n    -webkit-transform: rotate(360deg);\n    transform: rotate(360deg);\n}\n}\n.lds-eclipse {\n  position: relative;\n}\n.lds-eclipse div {\n  position: absolute;\n  -webkit-animation: lds-eclipse 0.3s linear infinite;\n  animation: lds-eclipse 0.3s linear infinite;\n  width: 120px;\n  height: 120px;\n  top: 40px;\n  left: 40px;\n  border-radius: 50%;\n  box-shadow: 0 4px 0 0 #cad1fb;\n  -webkit-transform-origin: 60px 62px;\n  transform-origin: 60px 62px;\n}\n.lds-eclipse {\n  width: 78px !important;\n  height: 78px !important;\n  -webkit-transform: translate(-39px, -39px) scale(0.39) translate(39px, 39px);\n  transform: translate(-39px, -39px) scale(0.39) translate(39px, 39px);\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css&":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css& ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.action-link[data-v-ba997c3a] {\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -1252,15 +1530,45 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css&":
-/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css& ***!
-  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css&");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailRevealForm.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1466,7 +1774,7 @@ var render = function() {
                               },
                               [
                                 _c("i", { staticClass: "fas fa-fingerprint" }),
-                                _vm._v(" My Tokens")
+                                _vm._v(" API Tokens")
                               ]
                             )
                           ],
@@ -1547,10 +1855,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/index.vue?vue&type=template&id=11cf4be5&scoped=true&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/index.vue?vue&type=template&id=11cf4be5&scoped=true& ***!
-  \***************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=template&id=6a6116a0&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/EmailRevealForm.vue?vue&type=template&id=6a6116a0& ***!
+  \*************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1562,24 +1870,435 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "form",
+    {
+      attrs: { id: "emailRevealForm" },
+      on: {
+        submit: function($event) {
+          $event.preventDefault()
+          return _vm.revealEmailId($event)
+        }
+      }
+    },
+    [
+      _c("vue-recaptcha", {
+        ref: "recap",
+        attrs: {
+          sitekey: "6Lfhr4gUAAAAADUsCoLtBpcsX5JEJtrcAFRsO7VS",
+          size: "invisible",
+          type: "invisible"
+        },
+        on: { render: _vm.autoSubmit, verify: _vm.onVerified }
+      }),
+      _vm._v(" "),
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "card-text text-center align-items-center justify-content-center"
+            },
+            [
+              !this.actualEmail || this.actualEmail.length == 0
+                ? _c(
+                    "div",
+                    {
+                      staticClass:
+                        "lds-css ng-scope  justify-content-center align-items-center"
+                    },
+                    [_vm._m(0)]
+                  )
+                : _c("h1", [_vm._v(_vm._s(this.actualEmail))])
+            ]
+          )
+        ])
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
+    return _c(
+      "div",
+      {
+        staticClass: "lds-eclipse",
+        staticStyle: { width: "100%", height: "100%" }
+      },
+      [_c("div")]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var this$1 = this
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
       _c("div", { staticClass: "card card-default" }, [
         _c("div", { staticClass: "card-header" }, [
-          _c("i", { staticClass: "fas fa-at" }),
-          _vm._v(" My Hidden Email IDs")
+          _vm._m(0),
+          _vm._v(" "),
+          _c(
+            "span",
+            { staticClass: "float-right" },
+            [
+              _c("filter-box", {
+                directives: [{ name: "b-tooltip", rawName: "v-b-tooltip" }],
+                staticClass: "form-control form-control-sm",
+                attrs: {
+                  placeholder: "Full email address",
+                  title:
+                    "Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive."
+                },
+                on: { filter: _vm.loadEmails },
+                model: {
+                  value: _vm.filterString,
+                  callback: function($$v) {
+                    _vm.filterString = $$v
+                  },
+                  expression: "filterString"
+                }
+              })
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "card-text" })
+          _c(
+            "div",
+            { staticClass: "card-text" },
+            [
+              _c(
+                "form",
+                {
+                  on: {
+                    submit: function($event) {
+                      $event.preventDefault()
+                      return _vm.addEmail($event)
+                    },
+                    keydown: function($event) {
+                      _vm.hideEmailForm.errors.clear($event.target.name)
+                    }
+                  }
+                },
+                [
+                  _c("div", { staticClass: "form-group row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "input-group" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.hideEmailForm.email,
+                              expression: "hideEmailForm.email"
+                            }
+                          ],
+                          ref: "emailField",
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.hideEmailForm.errors.has("email")
+                          },
+                          attrs: {
+                            type: "email",
+                            name: "email",
+                            disabled: _vm.hideEmailForm.busy,
+                            placeholder:
+                              "Email ID to be hidden. E.g. johndoe@example.com"
+                          },
+                          domProps: { value: _vm.hideEmailForm.email },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.hideEmailForm,
+                                "email",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group-append" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-primary btn-sm",
+                              attrs: { disabled: this.hideEmailForm.busy },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.addEmail($event)
+                                }
+                              }
+                            },
+                            [_vm._v("Add Email")]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "invalid-feedback",
+                          staticStyle: { display: "block" }
+                        },
+                        [
+                          _c("strong", [
+                            _vm._v(
+                              _vm._s(_vm.hideEmailForm.errors.get("email"))
+                            )
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              this.loading === true
+                ? _c("bullet-list-loader", {
+                    attrs: { step: 2, animate: true }
+                  })
+                : this.emails.data && this.emails.data.length > 0
+                  ? _c("b-table", {
+                      attrs: {
+                        hover: "",
+                        items: this.emails.data,
+                        fields: this.fields,
+                        caption: "Your hidden email Ids",
+                        "caption-top": ""
+                      },
+                      scopedSlots: _vm._u([
+                        {
+                          key: "hidden_email",
+                          fn: function(data) {
+                            return [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "card-link",
+                                  attrs: {
+                                    href: data.item.link,
+                                    target: "__blank"
+                                  }
+                                },
+                                [_vm._v(_vm._s(data.item.hidden_email))]
+                              )
+                            ]
+                          }
+                        },
+                        {
+                          key: "action",
+                          fn: function(data) {
+                            return [
+                              _c(
+                                "b-button-group",
+                                { attrs: { size: "sm" } },
+                                [
+                                  _c(
+                                    "b-button",
+                                    {
+                                      attrs: {
+                                        size: "sm",
+                                        variant: "secondary"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          _vm.showLinkOptions(data.item)
+                                        }
+                                      }
+                                    },
+                                    [_c("span", { staticClass: "fas fa-link" })]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "b-button",
+                                    {
+                                      attrs: { size: "sm", variant: "danger" },
+                                      on: {
+                                        click: function($event) {
+                                          $event.preventDefault()
+                                          _vm.deleteEmail(data.item)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("span", {
+                                        staticClass: "fas fa-trash text-white"
+                                      })
+                                    ]
+                                  )
+                                ],
+                                1
+                              )
+                            ]
+                          }
+                        }
+                      ])
+                    })
+                  : _c(
+                      "div",
+                      [
+                        _c("div", { staticClass: "text-center mb-2" }, [
+                          _vm._v(
+                            "\n                        You have not hidden any email IDs "
+                          ),
+                          _vm.filterString.length > 0
+                            ? _c("span", [
+                                _vm._v("that matches "),
+                                _c("em", { staticClass: "text-info" }, [
+                                  _vm._v(_vm._s(_vm.filterString))
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "b-tooltip",
+                                        rawName: "v-b-tooltip"
+                                      }
+                                    ],
+                                    staticClass: "action-link card-link",
+                                    attrs: { title: "Remove filter" },
+                                    on: {
+                                      click: function() {
+                                        this$1.filterString = ""
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-times-circle"
+                                    })
+                                  ]
+                                )
+                              ])
+                            : _vm._e(),
+                          _vm._v(".\n                    ")
+                        ]),
+                        _vm._v(" "),
+                        _vm.filterString.length > 0
+                          ? _c("b-alert", { attrs: { show: "" } }, [
+                              _vm._v(
+                                "\n                        Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive.\n                     "
+                              )
+                            ])
+                          : _vm._e()
+                      ],
+                      1
+                    ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "text-center" },
+                [
+                  _c("pagination", {
+                    attrs: { data: _vm.emails, limit: 2 },
+                    on: { "pagination-change-page": _vm.loadEmails }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          ref: "linkOptions",
+          attrs: {
+            size: "lg",
+            title: "Link options for " + _vm.currentEmail.email,
+            "ok-only": "",
+            "ok-variant": "secondary",
+            "ok-title": "Close"
+          }
+        },
+        [
+          _c("h4", [_vm._v("# Email Link")]),
+          _vm._v(" "),
+          _c("b-form-input", {
+            attrs: { readonly: "" },
+            model: {
+              value: _vm.currentEmail.link,
+              callback: function($$v) {
+                _vm.$set(_vm.currentEmail, "link", $$v)
+              },
+              expression: "currentEmail.link"
+            }
+          }),
+          _vm._v(" "),
+          _c("h4", [_vm._v("# HTML Code for the email link")]),
+          _vm._v(" "),
+          _c("b-form-textarea", {
+            attrs: {
+              rows: 3,
+              readonly: "",
+              value:
+                "<a href='" +
+                _vm.currentEmail.link +
+                "' target='__blank'>" +
+                _vm.currentEmail.hidden_email +
+                "</a>"
+            }
+          }),
+          _vm._v("\n        \n        Example: "),
+          _c("samp", [
+            _c(
+              "a",
+              { attrs: { href: _vm.currentEmail.link, target: "__blank" } },
+              [_vm._v(_vm._s(_vm.currentEmail.hidden_email))]
+            )
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("i", { staticClass: "fas fa-at" }),
+      _vm._v(" My Hidden Email IDs\n            ")
     ])
   }
 ]
@@ -2329,7 +3048,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                        Create New Token\n                    "
+                    "\n                            Create New Token\n                        "
                   )
                 ]
               )
@@ -2343,78 +3062,118 @@ var render = function() {
           [
             this.loadingTokens === true || this.loadingScopes === true
               ? _c("bullet-list-loader", { attrs: { step: 2, animate: true } })
-              : _c("span", [
-                  _vm.tokens.length === 0
-                    ? _c("p", { staticClass: "mb-0" }, [
-                        _vm._v(
-                          "\n                        You have not created any personal access tokens.\n                    "
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.tokens.length > 0
-                    ? _c(
-                        "table",
-                        { staticClass: "table table-borderless mb-0" },
-                        [
-                          _c("thead", [
-                            _c("tr", [
-                              _c("th", [_vm._v("Name")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Action")])
-                            ])
+              : _c(
+                  "span",
+                  [
+                    _vm.tokens.length === 0
+                      ? _c("p", { staticClass: "mb-2 text-center" }, [
+                          _vm._v(
+                            "\n                            You have not created any personal access tokens.\n                        "
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.tokens.length === 0
+                      ? _c("b-alert", { attrs: { show: "" } }, [
+                          _c("p", [
+                            _vm._v(
+                              "You can generate a personal access token here which can be passed as a bearer token in the authorization header on any API call."
+                            )
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.tokens, function(token) {
-                              return _c("tr", [
-                                _c(
-                                  "td",
-                                  {
-                                    staticStyle: { "vertical-align": "middle" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(token.name) +
-                                        "\n                                "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticStyle: { "vertical-align": "middle" }
-                                  },
-                                  [
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass: "action-link text-danger",
-                                        on: {
-                                          click: function($event) {
-                                            _vm.revoke(token)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        Delete\n                                    "
-                                        )
-                                      ]
-                                    )
-                                  ]
+                          _c("p", [_vm._v("Example:")]),
+                          _vm._v(" "),
+                          _c("pre", [
+                            _c("code", [
+                              _vm._v(
+                                "\n    POST /api/emails HTTP/1.1\n    Host: " +
+                                  _vm._s(_vm.domain) +
+                                  "\n    Accept: application/json\n    Content-Type: application/json\n    "
+                              ),
+                              _c("span", { staticClass: "bg-warning" }, [
+                                _vm._v(
+                                  "Authorization: Bearer <personal access token>"
                                 )
+                              ]),
+                              _vm._v(
+                                '\n\n    {\n        "email": "smeone@example.com"\n    }\n'
+                              )
+                            ]),
+                            _vm._v("\n")
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.tokens.length > 0
+                      ? _c(
+                          "table",
+                          { staticClass: "table table-borderless mb-0" },
+                          [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", [_vm._v("Name")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Action")])
                               ])
-                            }),
-                            0
-                          )
-                        ]
-                      )
-                    : _vm._e()
-                ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(_vm.tokens, function(token) {
+                                return _c("tr", [
+                                  _c(
+                                    "td",
+                                    {
+                                      staticStyle: {
+                                        "vertical-align": "middle"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(token.name) +
+                                          "\n                                    "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "td",
+                                    {
+                                      staticStyle: {
+                                        "vertical-align": "middle"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "action-link text-danger",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.revoke(token)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                            Delete\n                                        "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              }),
+                              0
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ],
+                  1
+                )
           ],
           1
         )
@@ -2444,9 +3203,9 @@ var render = function() {
                       _vm._l(_vm.form.errors, function(error) {
                         return _c("li", [
                           _vm._v(
-                            "\n                                " +
+                            "\n                                    " +
                               _vm._s(error) +
-                              "\n                            "
+                              "\n                                "
                           )
                         ])
                       }),
@@ -2528,9 +3287,9 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(
-                                    "\n\n                                                " +
-                                      _vm._s(scope.id) +
-                                      "\n                                        "
+                                    "\n\n                                                    " +
+                                      _vm._s(scope.description) +
+                                      "\n                                            "
                                   )
                                 ])
                               ])
@@ -2563,7 +3322,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                        Create\n                    "
+                    "\n                            Create\n                        "
                   )
                 ]
               )
@@ -2587,7 +3346,7 @@ var render = function() {
             _c("div", { staticClass: "modal-body" }, [
               _c("p", [
                 _vm._v(
-                  "\n                        Here is your new personal access token. This is the only time it will be shown so don't lose it!\n                        You may now use this token to make API requests.\n                    "
+                  "\n                            Here is your new personal access token. This is the only time it will be shown so don't lose it!\n                            You may now use this token to make API requests.\n                        "
                 )
               ]),
               _vm._v(" "),
@@ -2612,7 +3371,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", [
       _c("i", { staticClass: "fas fa-fingerprint" }),
-      _vm._v(" My Tokens\n                    ")
+      _vm._v(" API Tokens\n                        ")
     ])
   },
   function() {
@@ -2621,7 +3380,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c("h4", { staticClass: "modal-title" }, [
-        _vm._v("\n                        Create Token\n                    ")
+        _vm._v(
+          "\n                            Create Token\n                        "
+        )
       ]),
       _vm._v(" "),
       _c(
@@ -2654,7 +3415,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "modal-header" }, [
       _c("h4", { staticClass: "modal-title" }, [
         _vm._v(
-          "\n                        Personal Access Token\n                    "
+          "\n                            Personal Access Token\n                        "
         )
       ]),
       _vm._v(" "),
@@ -2713,6 +3474,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes_def_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./routes.def.js */ "./resources/js/routes.def.js");
 /* harmony import */ var _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Sidebar.vue */ "./resources/js/components/Sidebar.vue");
 /* harmony import */ var vue_content_loader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-content-loader */ "./node_modules/vue-content-loader/dist/vue-content-loader.es.js");
+/* harmony import */ var _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/emails/EmailRevealForm */ "./resources/js/components/emails/EmailRevealForm.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -2736,6 +3498,10 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]);
 
 
 
+Vue.component('bullet-list-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["BulletListLoader"]);
+Vue.component('facebook-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["FacebookLoader"]);
+Vue.component('content-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["ContentLoader"]);
+
 var app = new Vue({
   el: '#app',
   router: new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
@@ -2744,8 +3510,8 @@ var app = new Vue({
   }),
   components: {
     Sidebar: _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    FacebookLoader: vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["FacebookLoader"],
-    BulletListLoader: vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["BulletListLoader"]
+    EmailRevealForm: _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_9__["default"],
+    ContentLoader: vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["ContentLoader"]
   }
 });
 
@@ -2947,18 +3713,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/emails/index.vue":
-/*!**************************************************!*\
-  !*** ./resources/js/components/emails/index.vue ***!
-  \**************************************************/
+/***/ "./resources/js/components/emails/EmailRevealForm.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/emails/EmailRevealForm.vue ***!
+  \************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _index_vue_vue_type_template_id_11cf4be5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=11cf4be5&scoped=true& */ "./resources/js/components/emails/index.vue?vue&type=template&id=11cf4be5&scoped=true&");
-/* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ "./resources/js/components/emails/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _index_vue_vue_type_style_index_0_id_11cf4be5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css& */ "./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css&");
+/* harmony import */ var _EmailRevealForm_vue_vue_type_template_id_6a6116a0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EmailRevealForm.vue?vue&type=template&id=6a6116a0& */ "./resources/js/components/emails/EmailRevealForm.vue?vue&type=template&id=6a6116a0&");
+/* harmony import */ var _EmailRevealForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./EmailRevealForm.vue?vue&type=script&lang=js& */ "./resources/js/components/emails/EmailRevealForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _EmailRevealForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./EmailRevealForm.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -2969,66 +3735,153 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _index_vue_vue_type_template_id_11cf4be5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _index_vue_vue_type_template_id_11cf4be5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _EmailRevealForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _EmailRevealForm_vue_vue_type_template_id_6a6116a0___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _EmailRevealForm_vue_vue_type_template_id_6a6116a0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  "11cf4be5",
+  null,
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/emails/index.vue"
+component.options.__file = "resources/js/components/emails/EmailRevealForm.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/emails/index.vue?vue&type=script&lang=js&":
-/*!***************************************************************************!*\
-  !*** ./resources/js/components/emails/index.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************/
+/***/ "./resources/js/components/emails/EmailRevealForm.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/emails/EmailRevealForm.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/index.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailRevealForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css&":
-/*!***********************************************************************************************************!*\
-  !*** ./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css& ***!
-  \***********************************************************************************************************/
+/***/ "./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_11cf4be5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/index.vue?vue&type=style&index=0&id=11cf4be5&scoped=true&lang=css&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_11cf4be5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_11cf4be5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_11cf4be5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_11cf4be5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_style_index_0_id_11cf4be5_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailRevealForm.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/components/emails/index.vue?vue&type=template&id=11cf4be5&scoped=true&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/emails/index.vue?vue&type=template&id=11cf4be5&scoped=true& ***!
-  \*********************************************************************************************/
+/***/ "./resources/js/components/emails/EmailRevealForm.vue?vue&type=template&id=6a6116a0&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/emails/EmailRevealForm.vue?vue&type=template&id=6a6116a0& ***!
+  \*******************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_11cf4be5_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./index.vue?vue&type=template&id=11cf4be5&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/index.vue?vue&type=template&id=11cf4be5&scoped=true&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_11cf4be5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_template_id_6a6116a0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailRevealForm.vue?vue&type=template&id=6a6116a0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=template&id=6a6116a0&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_template_id_6a6116a0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_index_vue_vue_type_template_id_11cf4be5_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_template_id_6a6116a0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/emails/HiddenEmailIds.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/emails/HiddenEmailIds.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _HiddenEmailIds_vue_vue_type_template_id_ba997c3a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true& */ "./resources/js/components/emails/HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true&");
+/* harmony import */ var _HiddenEmailIds_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HiddenEmailIds.vue?vue&type=script&lang=js& */ "./resources/js/components/emails/HiddenEmailIds.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _HiddenEmailIds_vue_vue_type_style_index_0_id_ba997c3a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css& */ "./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _HiddenEmailIds_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _HiddenEmailIds_vue_vue_type_template_id_ba997c3a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _HiddenEmailIds_vue_vue_type_template_id_ba997c3a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "ba997c3a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/emails/HiddenEmailIds.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/emails/HiddenEmailIds.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/emails/HiddenEmailIds.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./HiddenEmailIds.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css&":
+/*!********************************************************************************************************************!*\
+  !*** ./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css& ***!
+  \********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_style_index_0_id_ba997c3a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_style_index_0_id_ba997c3a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_style_index_0_id_ba997c3a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_style_index_0_id_ba997c3a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_style_index_0_id_ba997c3a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_style_index_0_id_ba997c3a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/emails/HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/emails/HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_template_id_ba997c3a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_template_id_ba997c3a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HiddenEmailIds_vue_vue_type_template_id_ba997c3a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -3312,7 +4165,7 @@ var routes = [{
 }, // start editing from here   
 {
   path: '/emails',
-  component: __webpack_require__(/*! ./components/emails/index */ "./resources/js/components/emails/index.vue").default,
+  component: __webpack_require__(/*! ./components/emails/HiddenEmailIds */ "./resources/js/components/emails/HiddenEmailIds.vue").default,
   name: 'emails.index' // beforeEnter(to, from, next) {
   //     authorize(next);
   // },

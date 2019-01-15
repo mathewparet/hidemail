@@ -28,4 +28,19 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function emails()
+    {
+        return $this->hasMany(Email::class);
+    }
+
+    public function addEmail(Email $email)
+    {
+        return $this->emails()->save($email);
+    }
+
+    public function owns($model)
+    {
+        return $model->user_id === $this->id;
+    }
 }
