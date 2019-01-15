@@ -987,6 +987,23 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   /*
    * The component's data.
@@ -1002,7 +1019,8 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
         name: '',
         scopes: [],
         errors: []
-      }
+      },
+      domain: null
     };
   },
 
@@ -1018,6 +1036,7 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
    */
   mounted: function mounted() {
     this.prepareComponent();
+    this.domain = window.location.hostname;
   },
   methods: {
     /**
@@ -1755,7 +1774,7 @@ var render = function() {
                               },
                               [
                                 _c("i", { staticClass: "fas fa-fingerprint" }),
-                                _vm._v(" My Tokens")
+                                _vm._v(" API Tokens")
                               ]
                             )
                           ],
@@ -1952,6 +1971,7 @@ var render = function() {
                 directives: [{ name: "b-tooltip", rawName: "v-b-tooltip" }],
                 staticClass: "form-control form-control-sm",
                 attrs: {
+                  placeholder: "Full email address",
                   title:
                     "Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive."
                 },
@@ -3028,7 +3048,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                        Create New Token\n                    "
+                    "\n                            Create New Token\n                        "
                   )
                 ]
               )
@@ -3042,78 +3062,118 @@ var render = function() {
           [
             this.loadingTokens === true || this.loadingScopes === true
               ? _c("bullet-list-loader", { attrs: { step: 2, animate: true } })
-              : _c("span", [
-                  _vm.tokens.length === 0
-                    ? _c("p", { staticClass: "mb-0" }, [
-                        _vm._v(
-                          "\n                        You have not created any personal access tokens.\n                    "
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.tokens.length > 0
-                    ? _c(
-                        "table",
-                        { staticClass: "table table-borderless mb-0" },
-                        [
-                          _c("thead", [
-                            _c("tr", [
-                              _c("th", [_vm._v("Name")]),
-                              _vm._v(" "),
-                              _c("th", [_vm._v("Action")])
-                            ])
+              : _c(
+                  "span",
+                  [
+                    _vm.tokens.length === 0
+                      ? _c("p", { staticClass: "mb-2 text-center" }, [
+                          _vm._v(
+                            "\n                            You have not created any personal access tokens.\n                        "
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.tokens.length === 0
+                      ? _c("b-alert", { attrs: { show: "" } }, [
+                          _c("p", [
+                            _vm._v(
+                              "You can generate a personal access token here which can be passed as a bearer token in the authorization header on any API call."
+                            )
                           ]),
                           _vm._v(" "),
-                          _c(
-                            "tbody",
-                            _vm._l(_vm.tokens, function(token) {
-                              return _c("tr", [
-                                _c(
-                                  "td",
-                                  {
-                                    staticStyle: { "vertical-align": "middle" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(token.name) +
-                                        "\n                                "
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "td",
-                                  {
-                                    staticStyle: { "vertical-align": "middle" }
-                                  },
-                                  [
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass: "action-link text-danger",
-                                        on: {
-                                          click: function($event) {
-                                            _vm.revoke(token)
-                                          }
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        Delete\n                                    "
-                                        )
-                                      ]
-                                    )
-                                  ]
+                          _c("p", [_vm._v("Example:")]),
+                          _vm._v(" "),
+                          _c("pre", [
+                            _c("code", [
+                              _vm._v(
+                                "\n    POST /api/emails HTTP/1.1\n    Host: " +
+                                  _vm._s(_vm.domain) +
+                                  "\n    Accept: application/json\n    Content-Type: application/json\n    "
+                              ),
+                              _c("span", { staticClass: "bg-warning" }, [
+                                _vm._v(
+                                  "Authorization: Bearer <personal access token>"
                                 )
+                              ]),
+                              _vm._v(
+                                '\n\n    {\n        "email": "smeone@example.com"\n    }\n'
+                              )
+                            ]),
+                            _vm._v("\n")
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.tokens.length > 0
+                      ? _c(
+                          "table",
+                          { staticClass: "table table-borderless mb-0" },
+                          [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", [_vm._v("Name")]),
+                                _vm._v(" "),
+                                _c("th", [_vm._v("Action")])
                               ])
-                            }),
-                            0
-                          )
-                        ]
-                      )
-                    : _vm._e()
-                ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(_vm.tokens, function(token) {
+                                return _c("tr", [
+                                  _c(
+                                    "td",
+                                    {
+                                      staticStyle: {
+                                        "vertical-align": "middle"
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(token.name) +
+                                          "\n                                    "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "td",
+                                    {
+                                      staticStyle: {
+                                        "vertical-align": "middle"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "action-link text-danger",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.revoke(token)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                            Delete\n                                        "
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              }),
+                              0
+                            )
+                          ]
+                        )
+                      : _vm._e()
+                  ],
+                  1
+                )
           ],
           1
         )
@@ -3143,9 +3203,9 @@ var render = function() {
                       _vm._l(_vm.form.errors, function(error) {
                         return _c("li", [
                           _vm._v(
-                            "\n                                " +
+                            "\n                                    " +
                               _vm._s(error) +
-                              "\n                            "
+                              "\n                                "
                           )
                         ])
                       }),
@@ -3227,9 +3287,9 @@ var render = function() {
                                     }
                                   }),
                                   _vm._v(
-                                    "\n\n                                                " +
+                                    "\n\n                                                    " +
                                       _vm._s(scope.description) +
-                                      "\n                                        "
+                                      "\n                                            "
                                   )
                                 ])
                               ])
@@ -3262,7 +3322,7 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                        Create\n                    "
+                    "\n                            Create\n                        "
                   )
                 ]
               )
@@ -3286,7 +3346,7 @@ var render = function() {
             _c("div", { staticClass: "modal-body" }, [
               _c("p", [
                 _vm._v(
-                  "\n                        Here is your new personal access token. This is the only time it will be shown so don't lose it!\n                        You may now use this token to make API requests.\n                    "
+                  "\n                            Here is your new personal access token. This is the only time it will be shown so don't lose it!\n                            You may now use this token to make API requests.\n                        "
                 )
               ]),
               _vm._v(" "),
@@ -3311,7 +3371,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", [
       _c("i", { staticClass: "fas fa-fingerprint" }),
-      _vm._v(" My Tokens\n                    ")
+      _vm._v(" API Tokens\n                        ")
     ])
   },
   function() {
@@ -3320,7 +3380,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c("h4", { staticClass: "modal-title" }, [
-        _vm._v("\n                        Create Token\n                    ")
+        _vm._v(
+          "\n                            Create Token\n                        "
+        )
       ]),
       _vm._v(" "),
       _c(
@@ -3353,7 +3415,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "modal-header" }, [
       _c("h4", { staticClass: "modal-title" }, [
         _vm._v(
-          "\n                        Personal Access Token\n                    "
+          "\n                            Personal Access Token\n                        "
         )
       ]),
       _vm._v(" "),

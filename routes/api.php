@@ -16,7 +16,13 @@ use Illuminate\Http\Request;
 Route::middleware(['auth:api'])->group(function() { 
     Route::get('/user/info', 'UserController@info')->name('user.info');
 
-    Route::resource('/emails', 'EmailController');
+    Route::resource('/emails', 'EmailController', ['except'=>[
+        'update',
+        'edit',
+        'create',
+        'show'
+    ]]);
+
 
 });
 

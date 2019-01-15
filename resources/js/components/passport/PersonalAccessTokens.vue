@@ -11,7 +11,7 @@
                 <div class="card-header">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span>
-                            <i class="fas fa-fingerprint"></i> My Tokens
+                            <i class="fas fa-fingerprint"></i> API Tokens
                         </span>
 
                         <a class="action-link" tabindex="-1" @click="showCreateTokenForm">
@@ -24,9 +24,26 @@
                     <!-- No Tokens Notice -->
                     <bullet-list-loader :step=2 :animate="true"  v-if="this.loadingTokens === true || this.loadingScopes === true"/>
                     <span v-else>
-                        <p class="mb-0" v-if="tokens.length === 0">
+                        <p class="mb-2 text-center" v-if="tokens.length === 0">
                             You have not created any personal access tokens.
                         </p>
+                        <b-alert show v-if="tokens.length === 0">
+                            <p>You can generate a personal access token here which can be passed as a bearer token in the authorization header on any API call.</p>
+                            <p>Example:</p>
+<pre>
+<code>
+    POST /api/emails HTTP/1.1
+    Host: {{domain}}
+    Accept: application/json
+    Content-Type: application/json
+    <span class="bg-warning">Authorization: Bearer &lt;personal access token&gt;</span>
+
+    {
+        "email": "smeone@example.com"
+    }
+</code>
+</pre>
+                        </b-alert>
 
                         <!-- Personal Access Tokens -->
                         <table class="table table-borderless mb-0" v-if="tokens.length > 0">
@@ -175,7 +192,8 @@
                     name: '',
                     scopes: [],
                     errors: []
-                }
+                },
+                domain: null,
             };
         },
 
@@ -191,6 +209,7 @@
          */
         mounted() {
             this.prepareComponent();
+            this.domain = window.location.hostname;
         },
 
         methods: {

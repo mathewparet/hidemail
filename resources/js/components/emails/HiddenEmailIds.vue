@@ -6,7 +6,7 @@
                     <i class="fas fa-at"></i> My Hidden Email IDs
                 </span>
                 <span class="float-right">
-                    <filter-box class="form-control form-control-sm" @filter="loadEmails" v-model="filterString" title="Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive." v-b-tooltip/>
+                    <filter-box placeholder="Full email address" class="form-control form-control-sm" @filter="loadEmails" v-model="filterString" title="Since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive." v-b-tooltip/>
                 </span>
             </div>
             <div class="card-body">
