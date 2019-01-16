@@ -15,7 +15,7 @@
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <div class="input-group">
-                                    <input type="email" ref="emailField" class="form-control" :class="{'is-invalid': hideEmailForm.errors.has('email')}" v-model="hideEmailForm.email" name="email" :disabled="hideEmailForm.busy" placeholder="Email ID to be hidden. E.g. johndoe@example.com">
+                                    <input type="email" ref="emailField" class="form-control" :class="{'is-invalid': hideEmailForm.errors.has('email'), 'border-primary': !hideEmailForm.errors.has('email')}" v-model="hideEmailForm.email" name="email" :disabled="hideEmailForm.busy" placeholder="Email ID to be hidden. E.g. johndoe@example.com">
                                     <div class="input-group-append">
                                         <button class="btn btn-outline-primary btn-sm" @click.prevent="addEmail" :disabled=this.hideEmailForm.busy>Add Email</button>
                                     </div>

@@ -9,9 +9,6 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-import Recaptcha from '@mathewparet/vue-recaptcha-invisible';
-Vue.use(Recaptcha);
-
 import VueAWN from "vue-awesome-notifications"
 Vue.use(VueAWN);
 
@@ -35,17 +32,20 @@ Vue.component('bullet-list-loader', BulletListLoader);
 Vue.component('facebook-loader', FacebookLoader);
 Vue.component('content-loader', ContentLoader);
 
-import EmailRevealForm from './components/emails/EmailRevealForm';
+if(document.getElementById('app')) {
+    const app = new Vue({
+        el: '#app',
+        router: new Router({
+            routes,
+            linkActiveClass: 'active',
+        }),
+        components: {
+            Sidebar,
+            ContentLoader,
+        }
+    });   
+}
 
-const app = new Vue({
-    el: '#app',
-    router: new Router({
-        routes,
-        linkActiveClass: 'active',
-    }),
-    components: {
-        Sidebar,
-        EmailRevealForm,
-        ContentLoader
-    }
-});
+require('./apps/RecaptchaApp');
+require('./apps/RevealEmailApp');
+require('./apps/GuestHideMailApp');

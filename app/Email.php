@@ -12,7 +12,7 @@ class Email extends Model
 
     protected $fillable = ['email'];
 
-    protected $hidden = ['email','updated_at','user_id','id'];
+    protected $hidden = ['email','updated_at','user_id','id', 'email_bi'];
 
     protected $appends = ['link','hidden_email'];
 

@@ -184,6 +184,102 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mathewparet_form_error_control__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mathewparet/form-error-control */ "./node_modules/@mathewparet/form-error-control/src/form.js");
+/* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  components: {
+    VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      hideEmailForm: new _mathewparet_form_error_control__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        email: null,
+        recaptcha: null
+      }),
+      currentEmail: {}
+    };
+  },
+  mounted: function mounted() {
+    this.$refs.emailField.focus();
+  },
+  methods: {
+    showLinkOptions: function showLinkOptions(email) {
+      this.currentEmail = email;
+      this.$refs.linkOptions.show();
+    },
+    addEmail: function addEmail(e) {
+      e.preventDefault();
+      this.$refs.recap.execute();
+    },
+    onVerified: function onVerified(response) {
+      var _this = this;
+
+      this.hideEmailForm.recaptcha = response;
+      this.hideEmailForm.post('/api/guestEmail').then(function (response) {
+        _this.$awn.success(response.message);
+
+        _this.hideEmailForm.reset();
+
+        _this.showLinkOptions(response.email);
+      }).catch(function (error) {
+        _this.$awn.alert(error.message);
+      }).finally(function () {
+        _this.$refs.recap.reset();
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=script&lang=js& ***!
@@ -1173,6 +1269,25 @@ exports.push([module.i, "\n@keyframes lds-eclipse {\n0% {\n    -webkit-transform
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.action-link[data-v-0abb191a] {\n    cursor: pointer;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css&":
 /*!***************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=style&index=0&id=ba997c3a&scoped=true&lang=css& ***!
@@ -1539,6 +1654,36 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 
 var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./EmailRevealForm.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/EmailRevealForm.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -1940,6 +2085,219 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=template&id=0abb191a&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=template&id=0abb191a&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "form",
+        {
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addEmail($event)
+            },
+            keydown: function($event) {
+              _vm.hideEmailForm.errors.clear($event.target.name)
+            }
+          }
+        },
+        [
+          _c("div", { staticClass: "form-group row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.hideEmailForm.email,
+                      expression: "hideEmailForm.email"
+                    }
+                  ],
+                  ref: "emailField",
+                  staticClass: "form-control",
+                  class: {
+                    "is-invalid": _vm.hideEmailForm.errors.has("email"),
+                    "border-primary": !_vm.hideEmailForm.errors.has("email")
+                  },
+                  attrs: {
+                    type: "email",
+                    name: "email",
+                    disabled: _vm.hideEmailForm.busy,
+                    placeholder:
+                      "Email ID to be hidden. E.g. johndoe@example.com"
+                  },
+                  domProps: { value: _vm.hideEmailForm.email },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.hideEmailForm, "email", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group-append" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-primary btn-sm",
+                      attrs: { disabled: this.hideEmailForm.busy },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.addEmail($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Add Email")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "invalid-feedback",
+                  staticStyle: { display: "block" }
+                },
+                [
+                  _c("strong", [
+                    _vm._v(_vm._s(_vm.hideEmailForm.errors.get("email")))
+                  ])
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("vue-recaptcha", {
+            ref: "recap",
+            attrs: {
+              sitekey: "6Lfhr4gUAAAAADUsCoLtBpcsX5JEJtrcAFRsO7VS",
+              size: "invisible",
+              type: "invisible"
+            },
+            on: { verify: _vm.onVerified }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          ref: "linkOptions",
+          attrs: {
+            size: "lg",
+            title: "Hidden Email",
+            "ok-only": "",
+            "ok-variant": "secondary",
+            "ok-title": "Close"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "text-left" },
+            [
+              _c(
+                "p",
+                [
+                  _vm._v(
+                    "\n                You can use the below link wherever your email is supposed to be displayed.\n                "
+                  ),
+                  _c("b-form-input", {
+                    attrs: { readonly: "" },
+                    model: {
+                      value: _vm.currentEmail.link,
+                      callback: function($$v) {
+                        _vm.$set(_vm.currentEmail, "link", $$v)
+                      },
+                      expression: "currentEmail.link"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                [
+                  _vm._v(
+                    "\n                You can display an obfuscated version of your email address which links to the above URL. Since the full email address is no longer displayed, spam bots will not be able to crawl and index your emails. When the link is clicked actual email ID will be displayed "
+                  ),
+                  _c("em", [
+                    _vm._v(
+                      "after reCaptcha verifies that the visitor is a human"
+                    )
+                  ]),
+                  _vm._v(".\n                "),
+                  _c("b-form-textarea", {
+                    attrs: {
+                      rows: 3,
+                      readonly: "",
+                      value:
+                        "<a href='" +
+                        _vm.currentEmail.link +
+                        "' target='__blank'>" +
+                        _vm.currentEmail.hidden_email +
+                        "</a>"
+                    }
+                  }),
+                  _vm._v("\n            \n                Example: "),
+                  _c("samp", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: _vm.currentEmail.link,
+                          target: "__blank"
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.currentEmail.hidden_email))]
+                    )
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("b-alert", { attrs: { show: "", variant: "info" } }, [
+                _vm._v(
+                  "\n                If you have multiple email IDs to hide, you may want to considering registering for a FREE account. Once you register for an account you will be able to use our API to programatically generate the email links as needed.\n            "
+                )
+              ])
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true&":
 /*!************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/emails/HiddenEmailIds.vue?vue&type=template&id=ba997c3a&scoped=true& ***!
@@ -2023,7 +2381,10 @@ var render = function() {
                           ref: "emailField",
                           staticClass: "form-control",
                           class: {
-                            "is-invalid": _vm.hideEmailForm.errors.has("email")
+                            "is-invalid": _vm.hideEmailForm.errors.has("email"),
+                            "border-primary": !_vm.hideEmailForm.errors.has(
+                              "email"
+                            )
                           },
                           attrs: {
                             type: "email",
@@ -2336,7 +2697,7 @@ var render = function() {
                 _c(
                   "tbody",
                   _vm._l(_vm.tokens, function(token) {
-                    return _c("tr", [
+                    return _c("tr", { key: token.id }, [
                       _c(
                         "td",
                         { staticStyle: { "vertical-align": "middle" } },
@@ -2496,7 +2857,7 @@ var render = function() {
               _c(
                 "tbody",
                 _vm._l(_vm.clients, function(client) {
-                  return _c("tr", [
+                  return _c("tr", { key: client.id }, [
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
                         "\n                            " +
@@ -2585,7 +2946,7 @@ var render = function() {
                     _c(
                       "ul",
                       _vm._l(_vm.createForm.errors, function(error) {
-                        return _c("li", [
+                        return _c("li", { key: error }, [
                           _vm._v(
                             "\n                                " +
                               _vm._s(error) +
@@ -2757,7 +3118,7 @@ var render = function() {
                     _c(
                       "ul",
                       _vm._l(_vm.editForm.errors, function(error) {
-                        return _c("li", [
+                        return _c("li", { key: error }, [
                           _vm._v(
                             "\n                                " +
                               _vm._s(error) +
@@ -3120,7 +3481,7 @@ var render = function() {
                             _c(
                               "tbody",
                               _vm._l(_vm.tokens, function(token) {
-                                return _c("tr", [
+                                return _c("tr", { key: token.id }, [
                                   _c(
                                     "td",
                                     {
@@ -3201,7 +3562,7 @@ var render = function() {
                     _c(
                       "ul",
                       _vm._l(_vm.form.errors, function(error) {
-                        return _c("li", [
+                        return _c("li", { key: error }, [
                           _vm._v(
                             "\n                                    " +
                               _vm._s(error) +
@@ -3272,7 +3633,7 @@ var render = function() {
                           "div",
                           { staticClass: "col-md-6" },
                           _vm._l(_vm.scopes, function(scope) {
-                            return _c("div", [
+                            return _c("div", { key: scope.id }, [
                               _c("div", { staticClass: "checkbox" }, [
                                 _c("label", [
                                   _c("input", {
@@ -3350,11 +3711,27 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c(
-                "textarea",
-                { staticClass: "form-control", attrs: { rows: "10" } },
-                [_vm._v(_vm._s(_vm.accessToken))]
-              )
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.accessToken,
+                    expression: "accessToken"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "10" },
+                domProps: { value: _vm.accessToken },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.accessToken = $event.target.value
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _vm._m(4)
@@ -3464,17 +3841,15 @@ render._withStripped = true
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mathewparet_vue_recaptcha_invisible__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mathewparet/vue-recaptcha-invisible */ "./node_modules/@mathewparet/vue-recaptcha-invisible/src/vue-recaptcha-invisible.vue");
-/* harmony import */ var vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-awesome-notifications */ "./node_modules/vue-awesome-notifications/dist/index.js");
-/* harmony import */ var vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mathewparet/vue-filter-box */ "./node_modules/@mathewparet/vue-filter-box/src/FilterBox.vue");
-/* harmony import */ var _mathewparet_vue_common_filters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mathewparet/vue-common-filters */ "./node_modules/@mathewparet/vue-common-filters/src/filters.js");
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/es/index.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _routes_def_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./routes.def.js */ "./resources/js/routes.def.js");
-/* harmony import */ var _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Sidebar.vue */ "./resources/js/components/Sidebar.vue");
-/* harmony import */ var vue_content_loader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-content-loader */ "./node_modules/vue-content-loader/dist/vue-content-loader.es.js");
-/* harmony import */ var _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/emails/EmailRevealForm */ "./resources/js/components/emails/EmailRevealForm.vue");
+/* harmony import */ var vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-awesome-notifications */ "./node_modules/vue-awesome-notifications/dist/index.js");
+/* harmony import */ var vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mathewparet/vue-filter-box */ "./node_modules/@mathewparet/vue-filter-box/src/FilterBox.vue");
+/* harmony import */ var _mathewparet_vue_common_filters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mathewparet/vue-common-filters */ "./node_modules/@mathewparet/vue-common-filters/src/filters.js");
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/es/index.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _routes_def_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./routes.def.js */ "./resources/js/routes.def.js");
+/* harmony import */ var _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Sidebar.vue */ "./resources/js/components/Sidebar.vue");
+/* harmony import */ var vue_content_loader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-content-loader */ "./node_modules/vue-content-loader/dist/vue-content-loader.es.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -3484,36 +3859,122 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
-Vue.use(_mathewparet_vue_recaptcha_invisible__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.use(vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default.a);
 
-Vue.use(vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default.a);
+Vue.use(_mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
-Vue.use(_mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_2__["default"]);
+Vue.use(_mathewparet_vue_common_filters__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
-Vue.use(_mathewparet_vue_common_filters__WEBPACK_IMPORTED_MODULE_3__["default"]);
+Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
-Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["default"]);
-
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
 
 
 
-Vue.component('bullet-list-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["BulletListLoader"]);
-Vue.component('facebook-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["FacebookLoader"]);
-Vue.component('content-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["ContentLoader"]);
+Vue.component('bullet-list-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_7__["BulletListLoader"]);
+Vue.component('facebook-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_7__["FacebookLoader"]);
+Vue.component('content-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_7__["ContentLoader"]);
 
-var app = new Vue({
-  el: '#app',
-  router: new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
-    routes: _routes_def_js__WEBPACK_IMPORTED_MODULE_6__["default"],
-    linkActiveClass: 'active'
-  }),
-  components: {
-    Sidebar: _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    EmailRevealForm: _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_9__["default"],
-    ContentLoader: vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["ContentLoader"]
-  }
-});
+if (document.getElementById('app')) {
+  var app = new Vue({
+    el: '#app',
+    router: new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      routes: _routes_def_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+      linkActiveClass: 'active'
+    }),
+    components: {
+      Sidebar: _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+      ContentLoader: vue_content_loader__WEBPACK_IMPORTED_MODULE_7__["ContentLoader"]
+    }
+  });
+}
+
+__webpack_require__(/*! ./apps/RecaptchaApp */ "./resources/js/apps/RecaptchaApp.js");
+
+__webpack_require__(/*! ./apps/RevealEmailApp */ "./resources/js/apps/RevealEmailApp.js");
+
+__webpack_require__(/*! ./apps/GuestHideMailApp */ "./resources/js/apps/GuestHideMailApp.js");
+
+/***/ }),
+
+/***/ "./resources/js/apps/GuestHideMailApp.js":
+/*!***********************************************!*\
+  !*** ./resources/js/apps/GuestHideMailApp.js ***!
+  \***********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_emails_GuestHideEmailId__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/emails/GuestHideEmailId */ "./resources/js/components/emails/GuestHideEmailId.vue");
+
+
+
+if (document.getElementById('guestHideMailApp')) {
+  var guestHideMailApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+    el: '#guestHideMailApp',
+    components: {
+      GuestHideEmailId: _components_emails_GuestHideEmailId__WEBPACK_IMPORTED_MODULE_1__["default"]
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/apps/RecaptchaApp.js":
+/*!*******************************************!*\
+  !*** ./resources/js/apps/RecaptchaApp.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
+
+
+
+if (document.getElementById('recaptchaApp')) {
+  var recaptchaApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+    el: '#recaptchaApp',
+    components: {
+      VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__["default"]
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/apps/RevealEmailApp.js":
+/*!*********************************************!*\
+  !*** ./resources/js/apps/RevealEmailApp.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
+/* harmony import */ var _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/emails/EmailRevealForm */ "./resources/js/components/emails/EmailRevealForm.vue");
+
+
+
+
+if (document.getElementById('revealEmailApp')) {
+  var revealEmailApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+    el: '#revealEmailApp',
+    components: {
+      VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__["default"],
+      EmailRevealForm: _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_2__["default"]
+    }
+  });
+}
 
 /***/ }),
 
@@ -3795,6 +4256,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_template_id_6a6116a0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_EmailRevealForm_vue_vue_type_template_id_6a6116a0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/emails/GuestHideEmailId.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/emails/GuestHideEmailId.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _GuestHideEmailId_vue_vue_type_template_id_0abb191a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GuestHideEmailId.vue?vue&type=template&id=0abb191a&scoped=true& */ "./resources/js/components/emails/GuestHideEmailId.vue?vue&type=template&id=0abb191a&scoped=true&");
+/* harmony import */ var _GuestHideEmailId_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./GuestHideEmailId.vue?vue&type=script&lang=js& */ "./resources/js/components/emails/GuestHideEmailId.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _GuestHideEmailId_vue_vue_type_style_index_0_id_0abb191a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css& */ "./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _GuestHideEmailId_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _GuestHideEmailId_vue_vue_type_template_id_0abb191a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _GuestHideEmailId_vue_vue_type_template_id_0abb191a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "0abb191a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/emails/GuestHideEmailId.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/emails/GuestHideEmailId.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/emails/GuestHideEmailId.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./GuestHideEmailId.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css& ***!
+  \**********************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_style_index_0_id_0abb191a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=style&index=0&id=0abb191a&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_style_index_0_id_0abb191a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_style_index_0_id_0abb191a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_style_index_0_id_0abb191a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_style_index_0_id_0abb191a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_style_index_0_id_0abb191a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/emails/GuestHideEmailId.vue?vue&type=template&id=0abb191a&scoped=true&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/emails/GuestHideEmailId.vue?vue&type=template&id=0abb191a&scoped=true& ***!
+  \********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_template_id_0abb191a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./GuestHideEmailId.vue?vue&type=template&id=0abb191a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/emails/GuestHideEmailId.vue?vue&type=template&id=0abb191a&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_template_id_0abb191a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_GuestHideEmailId_vue_vue_type_template_id_0abb191a_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -4166,10 +4714,7 @@ var routes = [{
 {
   path: '/emails',
   component: __webpack_require__(/*! ./components/emails/HiddenEmailIds */ "./resources/js/components/emails/HiddenEmailIds.vue").default,
-  name: 'emails.index' // beforeEnter(to, from, next) {
-  //     authorize(next);
-  // },
-
+  name: 'emails.index'
 }, {
   path: '/apps',
   component: __webpack_require__(/*! ./components/passport/Clients.vue */ "./resources/js/components/passport/Clients.vue").default,

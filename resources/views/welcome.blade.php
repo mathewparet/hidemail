@@ -4,12 +4,22 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{config('app.name')}}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <!-- Scripts -->
+        <script src="{{mix('js/manifest.js')}}" defer></script>
+        <script src="{{mix('js/vendor.js')}}" defer></script>
+        <script src="{{mix('js/app.js')}}" defer></script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
+
         <!-- Styles -->
+        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <style>
             html, body {
                 background-color: #fff;
@@ -21,7 +31,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 90vh;
             }
 
             .flex-center {
@@ -67,6 +77,7 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
+                    <a href="https://documenter.getpostman.com/view/5815935/RznJoGx5" target="__blank">API Documentation</a>
                     @auth
                         <a href="{{ url('/home') }}">{{auth()->user()->name}}</a>
                     @else
@@ -79,20 +90,13 @@
                 </div>
             @endif
 
-            <div class="content">
+            <div class="content"  id="guestHideMailApp">
                 <div class="title m-b-md">
-                    Laravel
+                    <p>{{config('app.name')}}</p>
                 </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                <guest-hide-email-id/>
             </div>
         </div>
+        @include('layouts/footer')
     </body>
 </html>
