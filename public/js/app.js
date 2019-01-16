@@ -41,6 +41,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
@@ -1921,7 +1922,9 @@ var render = function() {
                                 _c("i", { staticClass: "fas fa-fingerprint" }),
                                 _vm._v(" API Tokens")
                               ]
-                            )
+                            ),
+                            _vm._v(" "),
+                            _vm._m(2)
                           ],
                           1
                         )
@@ -1968,6 +1971,22 @@ var staticRenderFns = [
       _c("i", { staticClass: "fas fa-ellipsis-v" }),
       _vm._v(" Navigation")
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "list-group-item list-group-item-action",
+        attrs: {
+          href: "https://documenter.getpostman.com/view/5815935/RznJoGx5",
+          target: "__blank"
+        }
+      },
+      [_c("i", { staticClass: "fas fa-atom" }), _vm._v(" API Docs")]
+    )
   }
 ]
 render._withStripped = true
