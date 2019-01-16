@@ -2336,7 +2336,7 @@ var render = function() {
                 _c(
                   "tbody",
                   _vm._l(_vm.tokens, function(token) {
-                    return _c("tr", [
+                    return _c("tr", { key: token.id }, [
                       _c(
                         "td",
                         { staticStyle: { "vertical-align": "middle" } },
@@ -2496,7 +2496,7 @@ var render = function() {
               _c(
                 "tbody",
                 _vm._l(_vm.clients, function(client) {
-                  return _c("tr", [
+                  return _c("tr", { key: client.id }, [
                     _c("td", { staticStyle: { "vertical-align": "middle" } }, [
                       _vm._v(
                         "\n                            " +
@@ -2585,7 +2585,7 @@ var render = function() {
                     _c(
                       "ul",
                       _vm._l(_vm.createForm.errors, function(error) {
-                        return _c("li", [
+                        return _c("li", { key: error }, [
                           _vm._v(
                             "\n                                " +
                               _vm._s(error) +
@@ -2757,7 +2757,7 @@ var render = function() {
                     _c(
                       "ul",
                       _vm._l(_vm.editForm.errors, function(error) {
-                        return _c("li", [
+                        return _c("li", { key: error }, [
                           _vm._v(
                             "\n                                " +
                               _vm._s(error) +
@@ -3120,7 +3120,7 @@ var render = function() {
                             _c(
                               "tbody",
                               _vm._l(_vm.tokens, function(token) {
-                                return _c("tr", [
+                                return _c("tr", { key: token.id }, [
                                   _c(
                                     "td",
                                     {
@@ -3201,7 +3201,7 @@ var render = function() {
                     _c(
                       "ul",
                       _vm._l(_vm.form.errors, function(error) {
-                        return _c("li", [
+                        return _c("li", { key: error }, [
                           _vm._v(
                             "\n                                    " +
                               _vm._s(error) +
@@ -3272,7 +3272,7 @@ var render = function() {
                           "div",
                           { staticClass: "col-md-6" },
                           _vm._l(_vm.scopes, function(scope) {
-                            return _c("div", [
+                            return _c("div", { key: scope.id }, [
                               _c("div", { staticClass: "checkbox" }, [
                                 _c("label", [
                                   _c("input", {
@@ -3350,11 +3350,27 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c(
-                "textarea",
-                { staticClass: "form-control", attrs: { rows: "10" } },
-                [_vm._v(_vm._s(_vm.accessToken))]
-              )
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.accessToken,
+                    expression: "accessToken"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { rows: "10" },
+                domProps: { value: _vm.accessToken },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.accessToken = $event.target.value
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _vm._m(4)
@@ -3464,17 +3480,15 @@ render._withStripped = true
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _mathewparet_vue_recaptcha_invisible__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @mathewparet/vue-recaptcha-invisible */ "./node_modules/@mathewparet/vue-recaptcha-invisible/src/vue-recaptcha-invisible.vue");
-/* harmony import */ var vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-awesome-notifications */ "./node_modules/vue-awesome-notifications/dist/index.js");
-/* harmony import */ var vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mathewparet/vue-filter-box */ "./node_modules/@mathewparet/vue-filter-box/src/FilterBox.vue");
-/* harmony import */ var _mathewparet_vue_common_filters__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mathewparet/vue-common-filters */ "./node_modules/@mathewparet/vue-common-filters/src/filters.js");
-/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/es/index.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _routes_def_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./routes.def.js */ "./resources/js/routes.def.js");
-/* harmony import */ var _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/Sidebar.vue */ "./resources/js/components/Sidebar.vue");
-/* harmony import */ var vue_content_loader__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-content-loader */ "./node_modules/vue-content-loader/dist/vue-content-loader.es.js");
-/* harmony import */ var _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/emails/EmailRevealForm */ "./resources/js/components/emails/EmailRevealForm.vue");
+/* harmony import */ var vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-awesome-notifications */ "./node_modules/vue-awesome-notifications/dist/index.js");
+/* harmony import */ var vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @mathewparet/vue-filter-box */ "./node_modules/@mathewparet/vue-filter-box/src/FilterBox.vue");
+/* harmony import */ var _mathewparet_vue_common_filters__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mathewparet/vue-common-filters */ "./node_modules/@mathewparet/vue-common-filters/src/filters.js");
+/* harmony import */ var bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! bootstrap-vue */ "./node_modules/bootstrap-vue/es/index.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _routes_def_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./routes.def.js */ "./resources/js/routes.def.js");
+/* harmony import */ var _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/Sidebar.vue */ "./resources/js/components/Sidebar.vue");
+/* harmony import */ var vue_content_loader__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-content-loader */ "./node_modules/vue-content-loader/dist/vue-content-loader.es.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -3484,36 +3498,94 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
-Vue.use(_mathewparet_vue_recaptcha_invisible__WEBPACK_IMPORTED_MODULE_0__["default"]);
+Vue.use(vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_0___default.a);
 
-Vue.use(vue_awesome_notifications__WEBPACK_IMPORTED_MODULE_1___default.a);
+Vue.use(_mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
-Vue.use(_mathewparet_vue_filter_box__WEBPACK_IMPORTED_MODULE_2__["default"]);
+Vue.use(_mathewparet_vue_common_filters__WEBPACK_IMPORTED_MODULE_2__["default"]);
 
-Vue.use(_mathewparet_vue_common_filters__WEBPACK_IMPORTED_MODULE_3__["default"]);
+Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
 
-Vue.use(bootstrap_vue__WEBPACK_IMPORTED_MODULE_4__["default"]);
-
-Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]);
+Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]);
 
 
 
-Vue.component('bullet-list-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["BulletListLoader"]);
-Vue.component('facebook-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["FacebookLoader"]);
-Vue.component('content-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["ContentLoader"]);
+Vue.component('bullet-list-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_7__["BulletListLoader"]);
+Vue.component('facebook-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_7__["FacebookLoader"]);
+Vue.component('content-loader', vue_content_loader__WEBPACK_IMPORTED_MODULE_7__["ContentLoader"]);
 
-var app = new Vue({
-  el: '#app',
-  router: new vue_router__WEBPACK_IMPORTED_MODULE_5__["default"]({
-    routes: _routes_def_js__WEBPACK_IMPORTED_MODULE_6__["default"],
-    linkActiveClass: 'active'
-  }),
-  components: {
-    Sidebar: _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    EmailRevealForm: _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_9__["default"],
-    ContentLoader: vue_content_loader__WEBPACK_IMPORTED_MODULE_8__["ContentLoader"]
-  }
-});
+if (document.getElementById('app')) {
+  var app = new Vue({
+    el: '#app',
+    router: new vue_router__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      routes: _routes_def_js__WEBPACK_IMPORTED_MODULE_5__["default"],
+      linkActiveClass: 'active'
+    }),
+    components: {
+      Sidebar: _components_Sidebar_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+      ContentLoader: vue_content_loader__WEBPACK_IMPORTED_MODULE_7__["ContentLoader"]
+    }
+  });
+}
+
+__webpack_require__(/*! ./apps/RecaptchaApp */ "./resources/js/apps/RecaptchaApp.js");
+
+__webpack_require__(/*! ./apps/RevealEmailApp */ "./resources/js/apps/RevealEmailApp.js");
+
+/***/ }),
+
+/***/ "./resources/js/apps/RecaptchaApp.js":
+/*!*******************************************!*\
+  !*** ./resources/js/apps/RecaptchaApp.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
+
+
+
+if (document.getElementById('recaptchaApp')) {
+  var recaptchaApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+    el: '#recaptchaApp',
+    components: {
+      VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__["default"]
+    }
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/apps/RevealEmailApp.js":
+/*!*********************************************!*\
+  !*** ./resources/js/apps/RevealEmailApp.js ***!
+  \*********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
+/* harmony import */ var _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/emails/EmailRevealForm */ "./resources/js/components/emails/EmailRevealForm.vue");
+
+
+
+
+if (document.getElementById('revealEmailApp')) {
+  var revealEmailApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+    el: '#revealEmailApp',
+    components: {
+      VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_1__["default"],
+      EmailRevealForm: _components_emails_EmailRevealForm__WEBPACK_IMPORTED_MODULE_2__["default"]
+    }
+  });
+}
 
 /***/ }),
 
@@ -4166,10 +4238,7 @@ var routes = [{
 {
   path: '/emails',
   component: __webpack_require__(/*! ./components/emails/HiddenEmailIds */ "./resources/js/components/emails/HiddenEmailIds.vue").default,
-  name: 'emails.index' // beforeEnter(to, from, next) {
-  //     authorize(next);
-  // },
-
+  name: 'emails.index'
 }, {
   path: '/apps',
   component: __webpack_require__(/*! ./components/passport/Clients.vue */ "./resources/js/components/passport/Clients.vue").default,

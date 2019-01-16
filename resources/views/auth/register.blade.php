@@ -1,14 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" id="recaptchaApp">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}" id="regForm">
+                @if ($errors->has('g-recaptcha-response'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('g-recaptcha-response') }}
+                    </div>
+                @endif
+                    <form method="POST" action="{{ route('register') }}" id="regForm" ref="regForm">
                         @csrf
 
                         <div class="form-group row">
@@ -63,7 +68,9 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <recaptcha class-name="btn btn-primary">Register</recaptcha>
+                                <vue-recaptcha ref="recap" sitekey="{{config('recaptcha.site')}}" size="invisible" @verify="()=>{this.$refs.regForm.submit();}" type="invisible">
+                                    <button class="btn btn-primary">Register</button>
+                                </vue-recaptcha>
                             </div>
                         </div>
                     </form>

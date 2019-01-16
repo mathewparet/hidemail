@@ -9,9 +9,6 @@ let routes = [
         path: '/emails',
         component: require('./components/emails/HiddenEmailIds').default,
         name: 'emails.index',
-        // beforeEnter(to, from, next) {
-        //     authorize(next);
-        // },
     },
     {
         path: '/apps',
