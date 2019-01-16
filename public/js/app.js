@@ -225,6 +225,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2205,43 +2212,80 @@ var render = function() {
           }
         },
         [
-          _c("h4", [_vm._v("# Email Link")]),
-          _vm._v(" "),
-          _c("b-form-input", {
-            attrs: { readonly: "" },
-            model: {
-              value: _vm.currentEmail.link,
-              callback: function($$v) {
-                _vm.$set(_vm.currentEmail, "link", $$v)
-              },
-              expression: "currentEmail.link"
-            }
-          }),
-          _vm._v(" "),
-          _c("h4", [_vm._v("# HTML Code for the email link")]),
-          _vm._v(" "),
-          _c("b-form-textarea", {
-            attrs: {
-              rows: 3,
-              readonly: "",
-              value:
-                "<a href='" +
-                _vm.currentEmail.link +
-                "' target='__blank'>" +
-                _vm.currentEmail.hidden_email +
-                "</a>"
-            }
-          }),
-          _vm._v("\n        \n        Example: "),
-          _c("samp", [
-            _c(
-              "a",
-              { attrs: { href: _vm.currentEmail.link, target: "__blank" } },
-              [_vm._v(_vm._s(_vm.currentEmail.hidden_email))]
-            )
-          ])
-        ],
-        1
+          _c(
+            "div",
+            { staticClass: "text-left" },
+            [
+              _c(
+                "p",
+                [
+                  _vm._v(
+                    "\n                You can use the below link wherever your email is supposed to be displayed.\n                "
+                  ),
+                  _c("b-form-input", {
+                    attrs: { readonly: "" },
+                    model: {
+                      value: _vm.currentEmail.link,
+                      callback: function($$v) {
+                        _vm.$set(_vm.currentEmail, "link", $$v)
+                      },
+                      expression: "currentEmail.link"
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "p",
+                [
+                  _vm._v(
+                    "\n                You can display an obfuscated version of your email address which links to the above URL. Since the full email address is no longer displayed, spam bots will not be able to crawl and index your emails. When the link is clicked actual email ID will be displayed "
+                  ),
+                  _c("em", [
+                    _vm._v(
+                      "after reCaptcha verifies that the visitor is a human"
+                    )
+                  ]),
+                  _vm._v(".\n                "),
+                  _c("b-form-textarea", {
+                    attrs: {
+                      rows: 3,
+                      readonly: "",
+                      value:
+                        "<a href='" +
+                        _vm.currentEmail.link +
+                        "' target='__blank'>" +
+                        _vm.currentEmail.hidden_email +
+                        "</a>"
+                    }
+                  }),
+                  _vm._v("\n            \n                Example: "),
+                  _c("samp", [
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href: _vm.currentEmail.link,
+                          target: "__blank"
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.currentEmail.hidden_email))]
+                    )
+                  ])
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("b-alert", { attrs: { show: "", variant: "info" } }, [
+                _vm._v(
+                  "\n                If you have multiple email IDs to hide, you may want to considering registering for a FREE account. Once you register for an account you will be able to use our API to programatically generate the email links as needed.\n            "
+                )
+              ])
+            ],
+            1
+          )
+        ]
       )
     ],
     1

@@ -17,14 +17,21 @@
             <vue-recaptcha ref="recap" sitekey="6Lfhr4gUAAAAADUsCoLtBpcsX5JEJtrcAFRsO7VS" size="invisible" @verify="onVerified" type="invisible"></vue-recaptcha>
         </form>
         <b-modal size="lg" ref="linkOptions" title="Hidden Email" ok-only ok-variant="secondary" ok-title="Close">
-
-            <h4># Email Link</h4>
-            <b-form-input readonly v-model="currentEmail.link"></b-form-input>
-
-            <h4># HTML Code for the email link</h4>
-            <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>'+currentEmail.hidden_email+'</a>'"></b-form-textarea>
-            
-            Example: <samp><a :href="currentEmail.link" target="__blank">{{currentEmail.hidden_email}}</a></samp>
+            <div class="text-left">
+                <p>
+                    You can use the below link wherever your email is supposed to be displayed.
+                    <b-form-input readonly v-model="currentEmail.link"></b-form-input>
+                </p>
+                <p>
+                    You can display an obfuscated version of your email address which links to the above URL. Since the full email address is no longer displayed, spam bots will not be able to crawl and index your emails. When the link is clicked actual email ID will be displayed <em>after reCaptcha verifies that the visitor is a human</em>.
+                    <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>'+currentEmail.hidden_email+'</a>'"></b-form-textarea>
+                
+                    Example: <samp><a :href="currentEmail.link" target="__blank">{{currentEmail.hidden_email}}</a></samp>
+                </p>
+                <b-alert show variant="info">
+                    If you have multiple email IDs to hide, you may want to considering registering for a FREE account. Once you register for an account you will be able to use our API to programatically generate the email links as needed.
+                </b-alert>
+            </div>
         </b-modal>
     </div>
 </template>

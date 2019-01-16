@@ -31,7 +31,7 @@
             }
 
             .full-height {
-                height: 100vh;
+                height: 90vh;
             }
 
             .flex-center {
@@ -97,5 +97,6 @@
                 <guest-hide-email-id/>
             </div>
         </div>
+        @include('layouts/footer')
     </body>
 </html>

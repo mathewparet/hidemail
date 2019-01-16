@@ -2,6 +2,7 @@
 
 return [
 
+    'email' => env('APP_COPY_EMAIL'),
     /**
      * ------------------------------------------------------------------------
      * Number of items to show in a page
