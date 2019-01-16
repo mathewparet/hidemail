@@ -94,7 +94,11 @@
                 <div class="title m-b-md">
                     <p>{{config('app.name')}}</p>
                 </div>
-                <guest-hide-email-id/>
+                @auth
+                    <p>It seems like you are already logged in. Please go to your <a href="/home">dahsboard</a> to hide more email IDs</p>
+                @else
+                    <guest-hide-email-id/>
+                @endauth
             </div>
         </div>
         @include('layouts/footer')
