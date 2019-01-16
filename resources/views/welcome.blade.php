@@ -9,7 +9,17 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
 
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <!-- Scripts -->
+        <script src="{{mix('js/manifest.js')}}" defer></script>
+        <script src="{{mix('js/vendor.js')}}" defer></script>
+        <script src="{{mix('js/app.js')}}" defer></script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
+
         <!-- Styles -->
+        <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <style>
             html, body {
                 background-color: #fff;
@@ -67,6 +77,7 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
+                    <a href="https://documenter.getpostman.com/view/5815935/RznJoGx5" target="__blank">API Documentation</a>
                     @auth
                         <a href="{{ url('/home') }}">{{auth()->user()->name}}</a>
                     @else
@@ -79,14 +90,11 @@
                 </div>
             @endif
 
-            <div class="content">
+            <div class="content"  id="guestHideMailApp">
                 <div class="title m-b-md">
                     <p>{{config('app.name')}}</p>
                 </div>
-                <div class="links">
-                    <a href="https://documenter.getpostman.com/view/5815935/RznJoGx5" target="__blank">API Documentation</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                <guest-hide-email-id/>
             </div>
         </div>
     </body>

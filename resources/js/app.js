@@ -46,5 +46,6 @@ if(document.getElementById('app')) {
     });   
 }
 
-require('./apps/RecaptchaApp')
+require('./apps/RecaptchaApp');
 require('./apps/RevealEmailApp');
+require('./apps/GuestHideMailApp');

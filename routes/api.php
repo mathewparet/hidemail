@@ -30,3 +30,4 @@ Route::middleware(['auth:api'])->group(function() {
 });
 
 Route::post('/emails/{email}','RevealEmailController@reveal')->name('emails.check');
+Route::post('/guestEmail', 'GuestEmailController@store')->name('guestEmails.store');
