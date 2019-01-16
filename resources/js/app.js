@@ -9,25 +9,43 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+import VueAWN from "vue-awesome-notifications"
+Vue.use(VueAWN);
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+import FilterBox from '@mathewparet/vue-filter-box';
+Vue.use(FilterBox);
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+import filters from '@mathewparet/vue-common-filters';
+Vue.use(filters);
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import BootstrapVue from 'bootstrap-vue'
+Vue.use(BootstrapVue);
 
-const app = new Vue({
-    el: '#app'
-});
+import Router from 'vue-router';
+Vue.use(Router);
+
+import routes from './routes.def.js'
+
+import Sidebar from './components/Sidebar.vue';
+import {FacebookLoader, BulletListLoader, ContentLoader} from 'vue-content-loader';
+Vue.component('bullet-list-loader', BulletListLoader);
+Vue.component('facebook-loader', FacebookLoader);
+Vue.component('content-loader', ContentLoader);
+
+if(document.getElementById('app')) {
+    const app = new Vue({
+        el: '#app',
+        router: new Router({
+            routes,
+            linkActiveClass: 'active',
+        }),
+        components: {
+            Sidebar,
+            ContentLoader,
+        }
+    });   
+}
+
+require('./apps/RecaptchaApp');
+require('./apps/RevealEmailApp');
+require('./apps/GuestHideMailApp');

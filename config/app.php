@@ -2,6 +2,17 @@
 
 return [
 
+    'email' => env('APP_COPY_EMAIL'),
+    /**
+     * ------------------------------------------------------------------------
+     * Number of items to show in a page
+     * ------------------------------------------------------------------------
+     * 
+     * Page breaks after this number of elements and page navigation links will
+     * appear. If there is not enough data to page, then no page links are
+     * shown.
+     */
+    'page' => env('PER_PAGE', 10),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -67,7 +78,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
 
     /*
     |--------------------------------------------------------------------------
