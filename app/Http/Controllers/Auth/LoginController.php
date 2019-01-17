@@ -36,4 +36,12 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     * Override credentials() to check suspended field
+     */
+    public function credentials() 
+    {
+        return array_merge(request()->only($this->username(),'password'),['suspended'=>false]);
+    }
 }
