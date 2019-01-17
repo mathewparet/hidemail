@@ -421,6 +421,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.loadEmails();
 
         _this2.hideEmailForm.reset();
+
+        _this2.showLinkOptions(response.email);
       }).catch(function (error) {
         _this2.$awn.alert(error.message);
       }).finally(function () {
@@ -2284,7 +2286,7 @@ var render = function() {
                 ]),
                 _vm._v(".\n                ")
               ]),
-              _c("h3", [_vm._v("Sample Code")]),
+              _c("h3", { staticClass: "mt-3 mb-1" }, [_vm._v("Sample Code")]),
               _vm._v(" "),
               _c("b-form-textarea", {
                 attrs: {
@@ -2520,9 +2522,16 @@ var render = function() {
                                   _c(
                                     "b-button",
                                     {
+                                      directives: [
+                                        {
+                                          name: "b-tooltip",
+                                          rawName: "v-b-tooltip"
+                                        }
+                                      ],
                                       attrs: {
                                         size: "sm",
-                                        variant: "secondary"
+                                        variant: "secondary",
+                                        title: "Show link"
                                       },
                                       on: {
                                         click: function($event) {
@@ -2635,14 +2644,14 @@ var render = function() {
           ref: "linkOptions",
           attrs: {
             size: "lg",
-            title: "Link options for " + _vm.currentEmail.email,
+            title: "Hidden Email Link",
             "ok-only": "",
             "ok-variant": "secondary",
             "ok-title": "Close"
           }
         },
         [
-          _c("h4", [_vm._v("# Email Link")]),
+          _c("h4", { staticClass: "mt-3 mb-2" }, [_vm._v("Email Link")]),
           _vm._v(" "),
           _c("b-form-input", {
             attrs: { readonly: "" },
@@ -2655,7 +2664,7 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("h4", [_vm._v("# HTML Code for the email link")]),
+          _c("h4", { staticClass: "mt-3 mb-2" }, [_vm._v("Sample HTML Code")]),
           _vm._v(" "),
           _c("b-form-textarea", {
             attrs: {

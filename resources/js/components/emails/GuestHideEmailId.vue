@@ -25,7 +25,7 @@
                 </p>
                 <p>
                     You can display an obfuscated version of your email address which links to the above URL. Since the full email address is no longer displayed, spam bots will not be able to crawl and index your emails. When the link is clicked, actual email ID will be displayed <em>after reCaptcha verifies that the visitor is a human</em>.
-                    <h3>Sample Code</h3>
+                    <h3 class="mt-3 mb-1">Sample Code</h3>
                     <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>'+currentEmail.hidden_email+'</a>'"></b-form-textarea>
                 
                     Example: <samp><a :href="currentEmail.link" target="__blank">{{currentEmail.hidden_email}}</a></samp>

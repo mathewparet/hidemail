@@ -33,7 +33,7 @@
                         </template>
                         <template slot="action" slot-scope="data">
                             <b-button-group size="sm">
-                                <b-button size="sm" variant="secondary" @click.prevent="showLinkOptions(data.item)"><span class="fas fa-link"></span></b-button>
+                                <b-button size="sm" variant="secondary" @click.prevent="showLinkOptions(data.item)" title="Show link" v-b-tooltip><span class="fas fa-link"></span></b-button>
                                 <b-button size="sm" variant="danger" @click.prevent="deleteEmail(data.item)"><span class="fas fa-trash text-white"></span></b-button>
                             </b-button-group>
                         </template>
@@ -52,12 +52,12 @@
                 </div>
             </div>
         </div>
-        <b-modal size="lg" ref="linkOptions" :title="'Link options for '+currentEmail.email" ok-only ok-variant="secondary" ok-title="Close">
+        <b-modal size="lg" ref="linkOptions" title="Hidden Email Link" ok-only ok-variant="secondary" ok-title="Close">
 
-            <h4># Email Link</h4>
+            <h4 class="mt-3 mb-2">Email Link</h4>
             <b-form-input readonly v-model="currentEmail.link"></b-form-input>
 
-            <h4># HTML Code for the email link</h4>
+            <h4 class="mt-3 mb-2">Sample HTML Code</h4>
             <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>'+currentEmail.hidden_email+'</a>'"></b-form-textarea>
             
             Example: <samp><a :href="currentEmail.link" target="__blank">{{currentEmail.hidden_email}}</a></samp>
