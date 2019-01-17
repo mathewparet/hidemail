@@ -22,7 +22,7 @@
 
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control" :class="{'is-invalid': profileForm.errors.has('email')}" name="email" v-model="profileForm.email" autofocus>
-                            <b-alert class="mt-3" show variant="warning" v-if="!profileForm.busy && profileForm.email != this.originalEmail">
+                            <b-alert class="mt-3" show variant="warning" v-if="!profileForm.busy && profileForm.email != this.user.email">
                                 Your new email address will not be verified. It is up to you to ensure you are providing the correct email address. If a wrong email address is provided you might lose access to your account permanently.
                             </b-alert>
                             <span class="invalid-feedback" style="display: block;">
@@ -78,6 +78,8 @@
 </template>
 <script>
     import Form from "@mathewparet/form-error-control";
+    import { mapState, mapMutations } from 'vuex';
+
     export default {
         data()
         {
@@ -89,8 +91,10 @@
                     password_confirmation: null,
                     current_password: null,
                 }),
-                originalEmail: null,
             };
+        },
+        computed: {
+            ...mapState(['user']),
         },
         mounted()
         {
@@ -98,23 +102,20 @@
             this.fetchUserDetails();
         },
         methods: {
+            ...mapMutations(['setUser']),
             fetchUserDetails()
             {
                 this.profileForm.busy = true;
-                axios.get('/api/user/info')
-                    .then(response => {
-                        this.profileForm.name = response.data.name;
-                        this.profileForm.email = response.data.email;
-                        this.originalEmail = response.data.email;
-                    })
-                    .catch(error => this.$awn.alert(error.message))
-                    .finally(() => this.profileForm.busy = false);
+                this.profileForm.name = this.user.name;
+                this.profileForm.email = this.user.email;
+                this.profileForm.busy = false;
             },
             saveProfile()
             {
                 this.profileForm.post('/api/profile')
                     .then(response => {
                         this.$awn.success(response.message);
+                        this.setUser(response.user);
                         this.$router.go(-1);
                     })
                     .catch(error => {
