@@ -30,11 +30,11 @@ Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
 	ExpiresDefault "now"
 	ExpiresByType text/css "access plus 7 days"
 	ExpiresByType text/javascript "access plus 7 days"
-	<FilesMatch "avatar\.jpg$">
-	    ExpiresByType image/jpeg "access plus 1 week"
-	</FilesMatch>
-	<FilesMatch "logo\.png$">
-	    ExpiresByType image/png "access plus 1 week"
+    ExpiresByType image/jpg "access plus 7 days"
+    ExpiresByType image/jpeg "access plus 7 days"
+    ExpiresByType image/png "access plus 7 days"
+	<FilesMatch "\.(jpg|jpeg|png)$">
+	    ExpiresDefault "access plus 7 days"
 	</FilesMatch>
 </IfModule>
 ## EXPIRES CACHING ##
