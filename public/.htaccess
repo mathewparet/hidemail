@@ -1,9 +1,14 @@
+Header always set Strict-Transport-Security "max-age=31536000" env=HTTPS
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
+
+    # Force SSL
+    RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+    RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=302,L]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
@@ -19,3 +24,17 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+## EXPIRES CACHING ##
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresDefault "now"
+	ExpiresByType text/css "access plus 7 days"
+	ExpiresByType text/javascript "access plus 7 days"
+	<FilesMatch "avatar\.jpg$">
+	    ExpiresByType image/jpeg "access plus 1 week"
+	</FilesMatch>
+	<FilesMatch "logo\.png$">
+	    ExpiresByType image/png "access plus 1 week"
+	</FilesMatch>
+</IfModule>
+## EXPIRES CACHING ##

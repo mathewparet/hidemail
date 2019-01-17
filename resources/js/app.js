@@ -70,6 +70,7 @@ function initializeVue()
             router: new Router({
                 routes,
                 linkActiveClass: 'active',
+                mode: "history"
             }),
             components: {
                 Sidebar,
