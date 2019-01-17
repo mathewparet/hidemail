@@ -33,6 +33,7 @@
         "vue-awesome-notifications": "^2.2.9",
         "vue-content-loader": "^0.2.1",
         "vue-recaptcha": "^1.1.1",
-        "vue-router": "^3.0.2"
+        "vue-router": "^3.0.2",
+        "vuex": "^3.0.1"
     }
 }
