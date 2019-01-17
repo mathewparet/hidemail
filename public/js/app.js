@@ -391,7 +391,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.$refs.emailField.focus();
+    this.focusEmail();
   },
   methods: {
     showLinkOptions: function showLinkOptions(email) {
@@ -409,7 +409,7 @@ __webpack_require__.r(__webpack_exports__);
         }).catch(function (error) {
           return _this.$awn.alert(error.message);
         });
-      }
+      } else this.focusEmail();
     },
     addEmail: function addEmail(e) {
       var _this2 = this;
@@ -426,8 +426,11 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (error) {
         _this2.$awn.alert(error.message);
       }).finally(function () {
-        return _this2.$refs.emailField.focus();
+        return _this2.focusEmail();
       });
+    },
+    focusEmail: function focusEmail() {
+      this.$refs.emailField.focus();
     },
     loadEmails: function loadEmails() {
       var _this3 = this;
@@ -440,7 +443,9 @@ __webpack_require__.r(__webpack_exports__);
       }).catch(function (error) {
         return _this3.$awn.alert(error.message);
       }).finally(function () {
-        return _this3.loading = false;
+        _this3.loading = false;
+
+        _this3.focusEmail();
       });
     }
   }
@@ -2648,7 +2653,8 @@ var render = function() {
             "ok-only": "",
             "ok-variant": "secondary",
             "ok-title": "Close"
-          }
+          },
+          on: { hidden: this.focusEmail }
         },
         [
           _c("h4", { staticClass: "mt-3 mb-2" }, [_vm._v("Email Link")]),

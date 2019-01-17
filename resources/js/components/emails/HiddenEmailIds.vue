@@ -52,7 +52,7 @@
                 </div>
             </div>
         </div>
-        <b-modal size="lg" ref="linkOptions" title="Hidden Email Link" ok-only ok-variant="secondary" ok-title="Close">
+        <b-modal size="lg" ref="linkOptions" title="Hidden Email Link" ok-only ok-variant="secondary" @hidden="this.focusEmail" ok-title="Close">
 
             <h4 class="mt-3 mb-2">Email Link</h4>
             <b-form-input readonly v-model="currentEmail.link"></b-form-input>
@@ -99,7 +99,7 @@
         },
         mounted()
         {
-            this.$refs.emailField.focus();
+            this.focusEmail();
         },
         methods: {
             showLinkOptions(email)
@@ -118,6 +118,8 @@
                         })
                         .catch(error => this.$awn.alert(error.message));
                 }
+                else
+                    this.focusEmail();
             },
             addEmail(e)
             {
@@ -127,11 +129,16 @@
                         this.$awn.success(response.message);
                         this.loadEmails();
                         this.hideEmailForm.reset();
+                        this.showLinkOptions(response.email);
                     })
                     .catch(error => {
                         this.$awn.alert(error.message);
                     })
-                    .finally(() => this.$refs.emailField.focus());
+                    .finally(() => this.focusEmail());
+            },
+            focusEmail()
+            {
+                this.$refs.emailField.focus();
             },
             loadEmails(page=1)
             {
@@ -142,7 +149,10 @@
                         this.emails = response.data.emails;
                     })
                     .catch(error => this.$awn.alert(error.message))
-                    .finally(() => this.loading = false);
+                    .finally(() => {
+                        this.loading = false;
+                        this.focusEmail();
+                    });
             }
         }
     }
