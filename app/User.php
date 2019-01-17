@@ -43,4 +43,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $model->user_id === $this->id;
     }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email_hash'] = sha1($value);
+        $this->attributes['email'] = encrypt($value);
+    }
+
+    public function getEmailAttribute()
+    {
+        return decrypt($this->attributes['email']);
+    }
 }

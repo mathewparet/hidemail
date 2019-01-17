@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Illuminate\Http\Request;
+
 class LoginController extends Controller
 {
     /*
@@ -40,8 +42,9 @@ class LoginController extends Controller
     /**
      * Override credentials() to check suspended field
      */
-    public function credentials() 
+    public function credentials(Request $request) 
     {
-        return array_merge(request()->only($this->username(),'password'),['suspended'=>false]);
+        // return array_merge(request()->only($this->username(),'password'),['suspended'=>false]);
+        return ['email_hash' => sha1($request->email), 'password' => $request->password, 'suspended' => false];
     }
 }
