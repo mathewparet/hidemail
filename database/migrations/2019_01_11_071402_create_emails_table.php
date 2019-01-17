@@ -17,12 +17,12 @@ class CreateEmailsTable extends Migration
             $table->increments('id');
             $table->string('email', 255)->unique();
             $table->uuid('uuid')->unique();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->nullable()->unsigned();
             $table->timestamps();
         });
 
         Schema::table('emails', function(Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 
