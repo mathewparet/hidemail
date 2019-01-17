@@ -4,9 +4,9 @@
             <div class="form-group row">
                 <div class="col-md-12">
                     <div class="input-group">
-                        <input type="email" ref="emailField" class="form-control" :class="{'is-invalid': hideEmailForm.errors.has('email'), 'border-primary': !hideEmailForm.errors.has('email')}" v-model="hideEmailForm.email" name="email" :disabled="hideEmailForm.busy" placeholder="Email ID to be hidden. E.g. johndoe@example.com">
+                        <input type="email" ref="emailField" class="form-control form-control-lg" :class="{'is-invalid': hideEmailForm.errors.has('email'), 'border-primary': !hideEmailForm.errors.has('email')}" v-model="hideEmailForm.email" name="email" :disabled="hideEmailForm.busy" placeholder="Email ID to be hidden. E.g. johndoe@example.com">
                         <div class="input-group-append">
-                            <button class="btn btn-outline-primary btn-sm" @click.prevent="addEmail" :disabled=this.hideEmailForm.busy>Add Email</button>
+                            <button class="btn btn-primary btn-lg" @click.prevent="addEmail" :disabled=this.hideEmailForm.busy>Hide Email</button>
                         </div>
                     </div>
                     <span class="invalid-feedback" style="display: block;">
@@ -16,20 +16,22 @@
             </div>
             <vue-recaptcha ref="recap" sitekey="6Lfhr4gUAAAAADUsCoLtBpcsX5JEJtrcAFRsO7VS" size="invisible" @verify="onVerified" type="invisible"></vue-recaptcha>
         </form>
-        <b-modal size="lg" ref="linkOptions" title="Hidden Email" ok-only ok-variant="secondary" ok-title="Close">
-            <div class="text-left">
+        <b-modal size="lg" ref="linkOptions" ok-only ok-variant="secondary" ok-title="Close">
+            <div slot="modal-title" class="text-dark">Hidden Email</div>
+            <div class="text-left text-dark">
                 <p>
                     You can use the below link wherever your email is supposed to be displayed.
                     <b-form-input readonly v-model="currentEmail.link"></b-form-input>
                 </p>
                 <p>
-                    You can display an obfuscated version of your email address which links to the above URL. Since the full email address is no longer displayed, spam bots will not be able to crawl and index your emails. When the link is clicked actual email ID will be displayed <em>after reCaptcha verifies that the visitor is a human</em>.
+                    You can display an obfuscated version of your email address which links to the above URL. Since the full email address is no longer displayed, spam bots will not be able to crawl and index your emails. When the link is clicked, actual email ID will be displayed <em>after reCaptcha verifies that the visitor is a human</em>.
+                    <h3 class="mt-3 mb-1">Sample Code</h3>
                     <b-form-textarea :rows="3" readonly :value="'<a href=\''+currentEmail.link+'\' target=\'__blank\'>'+currentEmail.hidden_email+'</a>'"></b-form-textarea>
                 
                     Example: <samp><a :href="currentEmail.link" target="__blank">{{currentEmail.hidden_email}}</a></samp>
                 </p>
                 <b-alert show variant="info">
-                    If you have multiple email IDs to hide, you may want to considering registering for a FREE account. Once you register for an account you will be able to use our API to programatically generate the email links as needed.
+                    If you have multiple email IDs to hide, you may want to consider registering for a FREE account. Once you register for an account, you will be able to use our API to programatically generate the email links as needed.
                 </b-alert>
             </div>
         </b-modal>

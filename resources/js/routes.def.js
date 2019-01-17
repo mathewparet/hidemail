@@ -11,6 +11,11 @@ let routes = [
         name: 'emails.index',
     },
     {
+        path: '/profile',
+        component: require('./components/users/Profile').default,
+        name: 'profile',
+    },
+    {
         path: '/apps',
         component: require('./components/passport/Clients.vue').default,
         name: 'passport.apps',

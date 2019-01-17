@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
 
 class ResetPasswordController extends Controller
 {
@@ -35,5 +36,15 @@ class ResetPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    /**
+     * Over ridden to enabled use of email hash
+     */
+    protected function credentials(Request $request)
+    {
+        return array_merge($request->only('password','password_confirmation', 'token')
+                                            ,['emaiL_hash'=>sha1($request->email)]
+                                        );
     }
 }

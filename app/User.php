@@ -26,7 +26,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token', 'email_hash', 'suspended',
     ];
 
     public function emails()
@@ -42,5 +42,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function owns($model)
     {
         return $model->user_id === $this->id;
+    }
+
+    public function setEmailAttribute($value)
+    {
+        $this->attributes['email_hash'] = sha1($value);
+        $this->attributes['email'] = encrypt($value);
+    }
+
+    public function getEmailAttribute()
+    {
+        return decrypt($this->attributes['email']);
     }
 }
