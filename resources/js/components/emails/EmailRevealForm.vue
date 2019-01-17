@@ -8,6 +8,7 @@
                         <div style="width:100%;height:100%" class="lds-eclipse">
                             <div></div>
                         </div>
+                        <h1>Trying to automatically detect whether you are human, you maybe asked some questions...</h1>
                     </div>
                     <h1 v-else>{{this.actualEmail}}</h1>
                 </div>
