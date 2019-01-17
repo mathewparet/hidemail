@@ -49,18 +49,21 @@
     <div class="overlay"></div>
     <div class="container">
         <div class="row">
-        <div class="col-xl-9 mx-auto">
-            <h1 class="mb-5">Protect your email from being indexed by crawlers.</h1>
-        </div>
-        <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-            <div class="content"  id="guestHideMailApp">
-                @auth
-                    <p>It seems like you are already logged in. Please go to your <a href="/home" class="text-warning">dashboard</a> to hide more email IDs</p>
-                @else
-                    <guest-hide-email-id/>
-                @endauth
+            <div class="col-xl-9 mx-auto">
+                <h1 class="mb-5">Hide your email from Spammers. Avoid being indexed.</h1>
             </div>
-        </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <div class="content"  id="guestHideMailApp">
+                    @auth
+                        <p>It seems like you are already logged in. Please go to your <a href="/home" class="text-warning">dashboard</a> to hide more email IDs</p>
+                    @else
+                        <guest-hide-email-id/>
+                    @endauth
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <h2 class="mb-5">{{$stats}} email IDs hidden (and counting...)</h2>
+            </div>
         </div>
     </div>
     </header>
@@ -76,7 +79,7 @@
             </div>
             <h3>Spam Protection</h3>
             <p class="lead mb-0">
-                Hide your email from bots / crawlers that index email IDs posted publicly on the internet so that they are protected from spam or phishing.
+                Hide your email from bots / crawlers that index email IDs posted publicly on the internet, so that they are protected from spam or phishing.
             </p>
         </div>
         </div>
@@ -113,7 +116,7 @@
             <div class="col-lg-6 order-lg-1 my-auto showcase-text">
                 <h2>How It Works</h2>
                 <p class="lead mb-0">
-                    When an email ID is added to our system we return an email link and a masked email ID. The masked email ID can be shown to the user with a hyperlink to the email link. When the user clicks on the link, reCAPTCHA will analyse the request and show the email ID if the requester is not a bot.  E.g. Go ahead, try this: <a href="{{$owner->link}}">{{$owner->hidden_email}}</a>
+                    When an email ID is added to our system we return an email link and a masked email ID. The masked email ID can be shown to the user with a hyperlink that we generate. When the user clicks on the link, reCAPTCHA will analyse the request and show the email ID, if the requester is not a bot.  E.g. Go ahead, try this: <a href="{{$owner->link}}">{{$owner->hidden_email}}</a>
                 </p>
             </div>
             </div>
