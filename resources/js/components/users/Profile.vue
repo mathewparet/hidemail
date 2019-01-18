@@ -106,7 +106,11 @@
         mounted()
         {
             this.profileForm.reset();
-            this.fetchUserDetails();
+            this.fetchUserDetails(this.propUserId);
+        },
+        beforeRouteUpdate (to, from, next) {
+            this.fetchUserDetails(this.user.id);
+            next();
         },
         methods: {
             ...mapMutations(['setUser']),
@@ -119,9 +123,9 @@
 
                 this.profileForm.busy = false;
             },
-            getOtherUserInformation()
+            getOtherUserInformation(userId)
             {
-                axios.get(`/api/users/${this.propUserId}`)
+                axios.get(`/api/users/${userId}`)
                         .then(response => {
                             this.populateForm(response.data.user);
                         })
@@ -134,14 +138,14 @@
                             this.profileForm.busy = false;
                         });
             },
-            fetchUserDetails()
+            fetchUserDetails(userId)
             {
                 this.profileForm.busy = true;
                 
-                if(this.user.id === this.propUserId)
+                if(this.user.id === userId)
                     this.populateForm(this.user);
                 else
-                    this.getOtherUserInformation();
+                    this.getOtherUserInformation(userId);
             },
             saveProfile()
             {

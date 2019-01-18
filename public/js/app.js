@@ -1400,7 +1400,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   mounted: function mounted() {
     this.profileForm.reset();
-    this.fetchUserDetails();
+    this.fetchUserDetails(this.propUserId);
+  },
+  beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
+    this.fetchUserDetails(this.user.id);
+    next();
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])(['setUser']), {
     populateForm: function populateForm(user) {
@@ -1410,10 +1414,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.user_id = user.id;
       this.profileForm.busy = false;
     },
-    getOtherUserInformation: function getOtherUserInformation() {
+    getOtherUserInformation: function getOtherUserInformation(userId) {
       var _this = this;
 
-      axios.get("/api/users/".concat(this.propUserId)).then(function (response) {
+      axios.get("/api/users/".concat(userId)).then(function (response) {
         _this.populateForm(response.data.user);
       }).catch(function (error) {
         if (error.response.status == 403) _this.$awn.alert("You are not authorized to to load this profile.");
@@ -1425,9 +1429,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.profileForm.busy = false;
       });
     },
-    fetchUserDetails: function fetchUserDetails() {
+    fetchUserDetails: function fetchUserDetails(userId) {
       this.profileForm.busy = true;
-      if (this.user.id === this.propUserId) this.populateForm(this.user);else this.getOtherUserInformation();
+      if (this.user.id === userId) this.populateForm(this.user);else this.getOtherUserInformation(userId);
     },
     saveProfile: function saveProfile() {
       var _this2 = this;
