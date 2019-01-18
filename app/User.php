@@ -29,7 +29,11 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'email_hash', 'suspended',
+        'password', 'remember_token', 'email_hash',
+    ];
+
+    protected $appends = [
+        'verified'
     ];
 
     public function emails()
@@ -40,6 +44,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function addEmail(Email $email)
     {
         return $this->emails()->save($email);
+    }
+
+    public function getVerifiedAttribute()
+    {
+        return blank($this->email_verified_at);
     }
 
     /**

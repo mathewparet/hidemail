@@ -11,15 +11,20 @@
         <div class="card-body">
             <div class="card-text">
                 <bullet-list-loader :step=2 :animate="true" v-if="this.loading === true"/>
-                <b-table v-else-if="this.users.data && this.users.data.length > 0" hover :items="this.users.data" :fields="this.fields">
+                <b-table stacked="md" v-else-if="this.users.data && this.users.data.length > 0" hover :items="this.users.data" :fields="this.fields">
                     <template slot="name" slot-scope="data">
                         <span :title="data.item.name" v-b-tooltip>{{data.item.name | trim(20)}}</span>
                     </template>
                     <template slot="email" slot-scope="data">
                         <span :title="data.item.email" v-b-tooltip>{{data.item.email | trim(20)}}</span>
+                        <b-badge variant="warning" v-if="data.item.verified">Unverified</b-badge>
+                        <b-badge variant="success" v-else>Verified</b-badge>
                     </template>
                     <template slot="created_at" slot-scope="data">
                         {{data.item.created_at}}
+                    </template>
+                    <template slot="status" slot-scope="data">
+                        <user-active-status v-model="data.item.suspended" :person="data.item"/> 
                     </template>
                     <template slot="action" slot-scope="data">
                         <b-button-group size="sm">
@@ -31,6 +36,9 @@
                     <div class="text-center mb-2">
                         You have not hidden any email IDs <span v-if="filterString.length > 0">that matches <em class="text-info">{{filterString}}</em> <a title="Remove filter" v-b-tooltip class="action-link card-link" @click="()=>{this.filterString = '';}"><i class="fas fa-times-circle"></i></a></span>.
                     </div>
+                    <b-alert show v-if="filterString.length > 0">
+                        If you are searching by partial name, it is fine. But since email IDs are encrypted in the database, searching / filtering of email IDs by partial match doesn't work. You will need to enter the complete email ID you are looking for in order to filter it. The search is, however, case-insensitive.
+                    </b-alert>
                 </div>
                 <div class="text-center">
                     <pagination :data="users" @pagination-change-page="loadUsers" :limit=2></pagination>
@@ -42,10 +50,12 @@
 <script>
     import FilterBox from '@mathewparet/vue-filter-box';
     import Pagination from 'laravel-vue-pagination';
+    import UserActiveStatus from './UserActiveStatus';
     export default {
         components: {
             FilterBox,
             Pagination,
+            UserActiveStatus,
         },
         data()
         {
@@ -60,7 +70,8 @@
             loadUsers(page = 1)
             {
                 this.loading = true;
-                axios.get('/api/users')
+                let filter = this.filterString == null ? '' : this.filterString;
+                axios.get(`/api/users?page=${page}&filter=${filter}`)
                     .then(response => {
                         this.users = response.data.users;
                     })

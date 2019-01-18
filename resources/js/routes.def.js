@@ -16,10 +16,11 @@ let routes = [
         path: '/users',
     },
     {
-        path: '/users/:id/edit',
+        path: '/users/:id?/edit',
         name: 'users.edit',
         component: require('./components/users/Profile').default,
         props: true,
+        alias: '/profile',
     },
     {
         path: '/apps',

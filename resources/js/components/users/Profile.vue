@@ -98,6 +98,10 @@
         },
         computed: {
             ...mapState(['user']),
+            propUserId()
+            {
+                return this.id ? this.id : this.user.id
+            },
         },
         mounted()
         {
@@ -117,7 +121,7 @@
             },
             getOtherUserInformation()
             {
-                axios.get(`/api/users/${this.id}`)
+                axios.get(`/api/users/${this.propUserId}`)
                         .then(response => {
                             this.populateForm(response.data.user);
                         })
@@ -134,7 +138,7 @@
             {
                 this.profileForm.busy = true;
                 
-                if(this.user.id === this.id)
+                if(this.user.id === this.propUserId)
                     this.populateForm(this.user);
                 else
                     this.getOtherUserInformation();

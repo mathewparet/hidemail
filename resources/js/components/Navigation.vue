@@ -19,7 +19,7 @@
                                             <router-link :to="{name: 'passport.apps'}" class="list-group-item list-group-item-action"><i class="fas fa-rocket"></i> My Apps</router-link>
                                             <router-link :to="{name: 'passport.authorized-apps'}" class="list-group-item list-group-item-action"><i class="fas fa-key"></i> Authorized Apps</router-link>
                                             <router-link :to="{name: 'passport.tokens'}" class="list-group-item list-group-item-action"><i class="fas fa-fingerprint"></i> API Tokens</router-link>
-                                            <router-link :to="{name: 'users.edit', params: {id: this.user.id}}" class="list-group-item list-group-item-action"><i class="fas fa-user-circle"></i> My Profile</router-link>
+                                            <router-link to="/profile" class="list-group-item list-group-item-action"><i class="fas fa-user-circle"></i> My Profile</router-link>
                                             <a href="https://documenter.getpostman.com/view/5815935/RznJoGx5" target="__blank" class="list-group-item list-group-item-action"><i class="fas fa-atom"></i> API Docs</a>
                                             <router-link v-if="this.user.id === 1" :to="{name: 'users.index'}" class="list-group-item list-group-item-action"><i class="fas fa-users"></i> Users</router-link>
                                         </div>
