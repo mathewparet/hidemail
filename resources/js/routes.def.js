@@ -23,6 +23,11 @@ let routes = [
         alias: '/profile',
     },
     {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: require('./components/Dashboard').default,
+    },
+    {
         path: '/apps',
         component: require('./components/passport/Clients.vue').default,
         name: 'passport.apps',

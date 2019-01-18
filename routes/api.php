@@ -31,6 +31,8 @@ Route::middleware(['auth:api'])->group(function() {
         'create',
     ]]);
 
+    Route::get('/dashboard', 'AdminDashboardController')->name('dashboard');
+
     Route::fallback(function(){
         return response()->json(['message' => 'Not Found.'], 404);
     })->name('api.fallback.404');

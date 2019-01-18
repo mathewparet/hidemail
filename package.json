@@ -30,6 +30,7 @@
         "bootstrap-vue": "^2.0.0-rc.11",
         "laravel-vue-pagination": "^2.2.0",
         "startbootstrap-landing-page": "^5.0.1",
+        "vue-animate-number": "^0.4.2",
         "vue-awesome-notifications": "^2.2.9",
         "vue-content-loader": "^0.2.1",
         "vue-recaptcha": "^1.1.1",
