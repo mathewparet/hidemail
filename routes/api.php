@@ -23,7 +23,13 @@ Route::middleware(['auth:api'])->group(function() {
         'show'
     ]]);
 
-    Route::post('/profile', 'UserController@update')->name('users.update');
+    // Route::post('/profile', 'UserController@update')->name('users.update');
+    Route::post('/users/{user}/toggle-suspension', 'UserController@toggleSuspension')->name('users.toggleSuspension');
+    Route::resource('/users','UserController', ['except'=>[
+        'store',
+        'destroy',
+        'edit'
+    ]]);
 
     Route::fallback(function(){
         return response()->json(['message' => 'Not Found.'], 404);

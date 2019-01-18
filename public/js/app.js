@@ -9,6 +9,11 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -43,7 +48,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['user']))
+});
 
 /***/ }),
 
@@ -1370,6 +1378,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['id'],
   data: function data() {
     return {
       profileForm: new _mathewparet_form_error_control__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -1378,7 +1387,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         password: null,
         password_confirmation: null,
         current_password: null
-      })
+      }),
+      current_email: null,
+      user_id: null
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['user'])),
@@ -1387,23 +1398,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.fetchUserDetails();
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])(['setUser']), {
-    fetchUserDetails: function fetchUserDetails() {
-      this.profileForm.busy = true;
-      this.profileForm.name = this.user.name;
-      this.profileForm.email = this.user.email;
+    populateForm: function populateForm(user) {
+      this.profileForm.name = user.name;
+      this.profileForm.email = user.email;
+      this.current_email = user.email;
+      this.user_id = user.id;
       this.profileForm.busy = false;
     },
-    saveProfile: function saveProfile() {
+    getOtherUserInformation: function getOtherUserInformation() {
       var _this = this;
 
-      this.profileForm.post('/api/profile').then(function (response) {
-        _this.$awn.success(response.message);
-
-        _this.setUser(response.user);
-
-        _this.$router.go(-1);
+      axios.get("/api/users/".concat(this.id)).then(function (response) {
+        _this.populateForm(response.data.user);
       }).catch(function (error) {
-        _this.$awn.alert(error.message);
+        if (error.response.status == 403) _this.$awn.alert("You are not authorized to to load this profile.");
+
+        _this.$router.push({
+          name: 'emails.index'
+        });
+      }).finally(function () {
+        _this.profileForm.busy = false;
+      });
+    },
+    fetchUserDetails: function fetchUserDetails() {
+      this.profileForm.busy = true;
+      if (this.user.id === this.id) this.populateForm(this.user);else this.getOtherUserInformation();
+    },
+    saveProfile: function saveProfile() {
+      var _this2 = this;
+
+      this.profileForm.patch("/api/users/".concat(this.user_id)).then(function (response) {
+        if (response.user.id === _this2.user.id) _this2.setUser(response.user);
+
+        _this2.$router.go(-1);
+
+        _this2.$awn.success(response.message);
+      }).catch(function (error) {
+        _this2.$awn.alert(error.message);
       });
     }
   })
@@ -2113,7 +2144,12 @@ var render = function() {
                               {
                                 staticClass:
                                   "list-group-item list-group-item-action",
-                                attrs: { to: { name: "profile" } }
+                                attrs: {
+                                  to: {
+                                    name: "users.edit",
+                                    params: { id: this.user.id }
+                                  }
+                                }
                               },
                               [
                                 _c("i", { staticClass: "fas fa-user" }),
@@ -4213,7 +4249,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   !_vm.profileForm.busy &&
-                  _vm.profileForm.email != this.user.email
+                  _vm.profileForm.email != this.current_email
                     ? _c(
                         "b-alert",
                         {
@@ -4223,7 +4259,7 @@ var render = function() {
                         [
                           _vm._v(
                             "\n                            Once you submit this form, you will receive a verification link in your new email Id. You will need to click on the verification link in the email in order to complete the email ID updation process. Until this is done, your profile / login will still be " +
-                              _vm._s(this.user.email) +
+                              _vm._s(this.current_email) +
                               ".\n                        "
                           )
                         ]
@@ -5579,10 +5615,16 @@ var routes = [{
   path: '/emails',
   component: __webpack_require__(/*! ./components/emails/HiddenEmailIds */ "./resources/js/components/emails/HiddenEmailIds.vue").default,
   name: 'emails.index'
-}, {
-  path: '/profile',
+}, // {
+//     path: '/profile',
+//     component: require('./components/users/Profile').default,
+//     name: 'profile',
+// },
+{
+  path: '/users/:id/edit',
+  name: 'users.edit',
   component: __webpack_require__(/*! ./components/users/Profile */ "./resources/js/components/users/Profile.vue").default,
-  name: 'profile'
+  props: true
 }, {
   path: '/apps',
   component: __webpack_require__(/*! ./components/passport/Clients.vue */ "./resources/js/components/passport/Clients.vue").default,

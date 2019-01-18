@@ -13,7 +13,6 @@ class UserPolicy
     {
         if(in_array($ability, [
             'index',
-            'forceVerify',
             'toggleSuspension'
         ]))
             return null;
@@ -31,16 +30,15 @@ class UserPolicy
         return $user->id === $model->id;
     }
 
+    public function show(User $user, User $model)
+    {
+        return $user->id === $model->id;
+    }
+
     public function toggleSuspension(User $user, User $model)
     {
         return $user->id === 1
             && $model->id != 1;
-    }
-
-    public function forceVerify(User $user, User $model)
-    {
-        return $user->id === 1
-            && $model->id == 1;
     }
 
     public function index(User $user)

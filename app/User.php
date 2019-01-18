@@ -42,6 +42,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->emails()->save($email);
     }
 
+    /**
+     * Check if a model is owned by the user
+     * 
+     * @param Illuminate\Database\Eloquent\Model $model
+     * 
+     * @return boolean
+     */
     public function owns($model)
     {
         return $model->user_id === $this->id;
@@ -58,5 +65,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getEmailAttribute()
     {
         return decrypt($this->attributes['email']);
+    }
+
+    public function scopeLike($query, $filter)
+    {
+        return $query->where('name','like','%'.$filter.'%')
+            ->orWhere('email_hash',sha1($filter));
     }
 }

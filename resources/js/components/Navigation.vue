@@ -19,7 +19,7 @@
                                             <router-link :to="{name: 'passport.apps'}" class="list-group-item list-group-item-action"><i class="fas fa-rocket"></i> My Apps</router-link>
                                             <router-link :to="{name: 'passport.authorized-apps'}" class="list-group-item list-group-item-action"><i class="fas fa-key"></i> Authorized Apps</router-link>
                                             <router-link :to="{name: 'passport.tokens'}" class="list-group-item list-group-item-action"><i class="fas fa-fingerprint"></i> API Tokens</router-link>
-                                            <router-link :to="{name: 'profile'}" class="list-group-item list-group-item-action"><i class="fas fa-user"></i> My Profile</router-link>
+                                            <router-link :to="{name: 'users.edit', params: {id: this.user.id}}" class="list-group-item list-group-item-action"><i class="fas fa-user"></i> My Profile</router-link>
                                             <a href="https://documenter.getpostman.com/view/5815935/RznJoGx5" target="__blank" class="list-group-item list-group-item-action"><i class="fas fa-atom"></i> API Docs</a>
                                         </div>
                                     </span>
@@ -33,8 +33,11 @@
     </span>
 </template>
 <script>
+    import {mapState} from 'vuex';
 
-export default {
-    
-}
+    export default {
+        computed: {
+            ...mapState(['user']),
+        },
+    }
 </script>
