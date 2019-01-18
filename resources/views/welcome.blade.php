@@ -9,6 +9,8 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
+    <link href="{{ mix('css/landing.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script src="{{mix('js/manifest.js')}}" defer></script>
@@ -16,7 +18,6 @@
     <script src="{{mix('js/app.js')}}" defer></script>
     <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit" async defer></script>
 
-    <link href="{{ mix('css/landing.css') }}" rel="stylesheet">
 
     </head>
 
