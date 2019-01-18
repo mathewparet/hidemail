@@ -11,9 +11,16 @@ let routes = [
         name: 'emails.index',
     },
     {
-        path: '/profile',
+        name: 'users.index',
+        component: require('./components/users/UserAdmin').default,
+        path: '/users',
+    },
+    {
+        path: '/users/:id?/edit',
+        name: 'users.edit',
         component: require('./components/users/Profile').default,
-        name: 'profile',
+        props: true,
+        alias: '/profile',
     },
     {
         path: '/apps',

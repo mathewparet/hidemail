@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-header"><i class="fas fa-user"></i> My Profile</div>
+            <div class="card-header"><i class="fas fa-user-circle"></i> My Profile</div>
             <div class="card-body">
                 <form @submit.prevent="saveProfile" @keydown="profileForm.errors.clear($event.target.name)">
 
@@ -22,8 +22,8 @@
 
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control" :class="{'is-invalid': profileForm.errors.has('email')}" name="email" v-model="profileForm.email" autofocus>
-                            <b-alert class="mt-3" show variant="warning" v-if="!profileForm.busy && profileForm.email != this.user.email">
-                                Once you submit this form, you will receive a verification link in your new email Id. You will need to click on the verification link in the email in order to complete the email ID updation process. Until this is done, your profile / login will still be {{this.user.email}}.
+                            <b-alert class="mt-3" show variant="warning" v-if="!profileForm.busy && profileForm.email != this.current_email">
+                                Once you submit this form, you will receive a verification link in your new email Id. You will need to click on the verification link in the email in order to complete the email ID updation process. Until this is done, your profile / login will still be {{this.current_email}}.
                             </b-alert>
                             <span class="invalid-feedback" style="display: block;">
                                 <strong>{{ profileForm.errors.get('email') }}</strong>
@@ -81,6 +81,7 @@
     import { mapState, mapMutations } from 'vuex';
 
     export default {
+        props: ['id'],
         data()
         {
             return {
@@ -91,32 +92,70 @@
                     password_confirmation: null,
                     current_password: null,
                 }),
+                current_email: null,
+                user_id: null,
             };
         },
         computed: {
             ...mapState(['user']),
+            propUserId()
+            {
+                return this.id ? this.id : this.user.id
+            },
         },
         mounted()
         {
             this.profileForm.reset();
-            this.fetchUserDetails();
+            this.fetchUserDetails(this.propUserId);
+        },
+        beforeRouteUpdate (to, from, next) {
+            this.fetchUserDetails(this.user.id);
+            next();
         },
         methods: {
             ...mapMutations(['setUser']),
-            fetchUserDetails()
+            populateForm(user)
+            {
+                this.profileForm.name = user.name;
+                this.profileForm.email = user.email;
+                this.current_email = user.email;
+                this.user_id = user.id
+
+                this.profileForm.busy = false;
+            },
+            getOtherUserInformation(userId)
+            {
+                axios.get(`/api/users/${userId}`)
+                        .then(response => {
+                            this.populateForm(response.data.user);
+                        })
+                        .catch(error => {
+                            if(error.response.status == 403)
+                            this.$awn.alert("You are not authorized to to load this profile.");
+                            this.$router.push({name: 'emails.index'});
+                        })
+                        .finally(() => {
+                            this.profileForm.busy = false;
+                        });
+            },
+            fetchUserDetails(userId)
             {
                 this.profileForm.busy = true;
-                this.profileForm.name = this.user.name;
-                this.profileForm.email = this.user.email;
-                this.profileForm.busy = false;
+                
+                if(this.user.id === userId)
+                    this.populateForm(this.user);
+                else
+                    this.getOtherUserInformation(userId);
             },
             saveProfile()
             {
-                this.profileForm.post('/api/profile')
-                    .then(response => {
-                        this.$awn.success(response.message);
-                        this.setUser(response.user);
+                this.profileForm.patch(`/api/users/${this.user_id}`)
+                    .then(response => {                        
+                        if(response.user.id === this.user.id)
+                            this.setUser(response.user);
+                        
                         this.$router.go(-1);
+                        this.$awn.success(response.message);
                     })
                     .catch(error => {
                         this.$awn.alert(error.message);

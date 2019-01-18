@@ -11278,3 +11278,7 @@ a.text-dark:focus {
   text-align: center;
 }
 
+.action-link {
+  cursor: pointer;
+}
+
