@@ -2,12 +2,7 @@
 
 @setup
     $repository = 'git@bitbucket.org:mathewparet/hide-mail.git';
-    $main_app = 'app-hidemail';
-    @if($app_name)
-        $app_dir = '/home/runcloud/webapps/{{$app_name}}';
-    @else
-        $app_dir = '/home/runcloud/webapps/{{$main_app}}';
-    @endif
+    $app_dir = '/home/runcloud/webapps/app-hidemail';
 @endsetup
 
 @story('fresh')
@@ -20,6 +15,7 @@
     cache_app
     link_storage
     install_passport
+    finished
 @endstory
 
 @story('deploy')
@@ -30,6 +26,7 @@
     cache_app
     manage_queue
     disable_maintenance_mode
+    finished
 @endstory
 
 @task('link_storage')
@@ -132,6 +129,6 @@
 	php artisan up
 @endtask
 
-@finished
-    echo "Action completed. If this is a fresh install, you may need to manually configure email."
-@endfinished
+@task('finished')
+    echo "Action completed. If this is a fresh install, you may need to manually configure email.";
+@endtask

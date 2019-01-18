@@ -2,7 +2,23 @@
 
 return [
 
-    'email' => env('APP_COPY_EMAIL'),
+    /**
+     * ------------------------------------------------------------------------
+     * Signed Link Expiry
+     * ------------------------------------------------------------------------
+     * 
+     * This value decides how long secure / signed urls are valid.
+     * 
+     * long - is for long expiry links (in hours), like invitations
+     * shhort - is for secure links that should expire in minutes
+     * 
+     */
+
+    'sign_expiry' => [
+        'long' => env('SIGNED_EXPIRY_LONG_HOURS', 48),
+        'short' => env('SIGNED_EXPIRY_SHORT_MINS', 5),
+    ],
+
     /**
      * ------------------------------------------------------------------------
      * Number of items to show in a page

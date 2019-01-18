@@ -23,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         Verified::class => [
             HideRegisteredUserEmail::class,
-        ]
+        ],
     ];
 
     /**
