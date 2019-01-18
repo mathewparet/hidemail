@@ -23,16 +23,32 @@ class AdminDashboardController extends Controller
 
         $num_users = User::count();
         
-        $num_apps = collect(DB::select(
-            DB::raw("select count(*) num_apps from oauth_clients where revoked = 0")
-        ))->first()->num_apps;
+        $num_apps = $this->getNumApps();
 
-        $num_api_keys = collect(DB::select(
-            DB::raw("select count(*) num from oauth_access_tokens where revoked = 0")
-        ))->first()->num;
+        $num_api_keys = $this->getNumApiKeys();
 
         $num_emails = Email::count();
         
         return response(compact('num_users', 'num_apps', 'num_api_keys', 'num_emails'));
+    }
+
+    private function getNumApps()
+    {
+        $num_apps =  $this->getCount('oauth_clients');
+        $num_apps -= 2; // 2 of these will be internal apps
+
+        return $num_apps;
+    }
+
+    private function getNumApiKeys()
+    {
+        return $this->getCount('oauth_access_tokens');
+    }
+
+    private function getCount($table)
+    {
+        return collect(DB::select(
+            DB::raw(__("select count(*) total_count from :table where revoked = 0", ['table'=>$table]))
+        ))->first()->total_count;
     }
 }
