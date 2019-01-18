@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="card">
-            <div class="card-header"><i class="fas fa-user"></i> My Profile</div>
+            <div class="card-header"><i class="fas fa-user-circle"></i> My Profile</div>
             <div class="card-body">
                 <form @submit.prevent="saveProfile" @keydown="profileForm.errors.clear($event.target.name)">
 

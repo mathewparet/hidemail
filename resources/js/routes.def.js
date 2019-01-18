@@ -10,11 +10,11 @@ let routes = [
         component: require('./components/emails/HiddenEmailIds').default,
         name: 'emails.index',
     },
-    // {
-    //     path: '/profile',
-    //     component: require('./components/users/Profile').default,
-    //     name: 'profile',
-    // },
+    {
+        name: 'users.index',
+        component: require('./components/users/UserAdmin').default,
+        path: '/users',
+    },
     {
         path: '/users/:id/edit',
         name: 'users.edit',
