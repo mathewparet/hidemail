@@ -34,7 +34,7 @@ class AppServiceProvider extends ServiceProvider
                 });
             }
             View::share('owner', $owner);
-            View::share('stats', number_format($stats));
+            View::share('stats', $stats);
         }
         catch(\Exception $e)
         {
