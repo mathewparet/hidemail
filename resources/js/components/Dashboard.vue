@@ -4,7 +4,7 @@
             <div class="card text-white bg-primary">
                 <div class="card-header">Total Users</div>
                 <div class="card-body">
-                    <h3><span class="fas fa-users text-warning"></span>&nbsp;</span> 
+                    <h3><span class="fas fa-users text-warning">&nbsp;</span>
                         <animate-number
                           from="0" 
                           :to="this.stats.num_users" 
