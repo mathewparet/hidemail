@@ -27,7 +27,7 @@
                         </div>
                     </form>
                     <bullet-list-loader :step=2 :animate="true" v-if="this.loading === true"/>
-                    <b-table v-else-if="this.emails.data && this.emails.data.length > 0" hover :items="this.emails.data" :fields="this.fields" caption="Your hidden email Ids" caption-top>
+                    <b-table stacked="md" v-else-if="this.emails.data && this.emails.data.length > 0" hover :items="this.emails.data" :fields="this.fields" caption="Your hidden email Ids" caption-top>
                         <template slot="hidden_email" slot-scope="data">
                             <a :href="data.item.link" target="__blank" class="card-link">{{data.item.hidden_email}}</a>
                         </template>
