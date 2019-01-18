@@ -4,13 +4,18 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-text text-center align-items-center justify-content-center">
-                    <div class="lds-css ng-scope  justify-content-center align-items-center" v-if="!this.actualEmail || this.actualEmail.length == 0">
+                    <div class="lds-css ng-scope  justify-content-center align-items-center" v-if="this.checking == true">
                         <div style="width:100%;height:100%" class="lds-eclipse">
                             <div></div>
                         </div>
                         <h1>Trying to automatically detect whether you are human, you maybe asked some questions...</h1>
                     </div>
-                    <h1 v-else>{{this.actualEmail}}</h1>
+                    <div v-else>
+                        <h1 v-if="this.actualEmail">{{this.actualEmail}}</h1>
+                        <b-alert show v-else-if="this.status != null" variant="danger">
+                            <h1>{{this.status}}</h1>
+                        </b-alert>
+                    </div>
                 </div>
             </div>
         </div>
@@ -79,7 +84,9 @@
         data()
         {
             return {
-                actualEmail: null
+                actualEmail: null,
+                checking: true,
+                status: null,
             };
         },
         props: {
@@ -91,12 +98,20 @@
         methods: {
             onVerified(response)
             {
+                this.checking = true;
                 axios.post(`/api/emails/${this.email}`, {
                     'g-recaptcha-response': response
                 })
                 .then(response => {
                     this.actualEmail = response.data.email;
-                });
+                })
+                .catch(error => {
+                    if(error.response.data.errors)
+                        this.status = error.response.data.errors['g-recaptcha-response'][0];
+                    else
+                        this.status = error.message;
+                })
+                .finally(() => {this.checking = false;});
             },
             autoSubmit(id)
             {
