@@ -45,12 +45,12 @@
     <header class="masthead text-white text-center">
     <div class="overlay"></div>
     <div class="container">
-        <div class="row">
+        <div class="row" id="guestHideMailApp">
             <div class="col-xl-9 mx-auto">
                 <h1 class="mb-5">Hide your email from Spammers. Avoid being indexed.</h1>
             </div>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                <div class="content"  id="guestHideMailApp">
+                <div class="content">
                     @auth
                         <p>It seems like you are already logged in. Please go to your <a href="/home" class="text-warning">dashboard</a> to hide more email IDs</p>
                     @else
@@ -59,7 +59,15 @@
                 </div>
             </div>
             <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
-                <h2 class="mb-5">{{$stats}} email IDs hidden (and counting...)</h2>
+                <h2 class="mb-5">
+                    <animate-number
+                          from="0" 
+                          :to="{{$stats}}" 
+                          duration="1000" 
+                          easing="easeOutQuad"
+                          :formatter="formatter"
+                        >                                                
+                        </animate-number> email IDs hidden (and counting...)</h2>
             </div>
         </div>
     </div>

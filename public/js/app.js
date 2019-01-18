@@ -5480,14 +5480,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_emails_GuestHideEmailId__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/emails/GuestHideEmailId */ "./resources/js/components/emails/GuestHideEmailId.vue");
+/* harmony import */ var vue_animate_number__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-animate-number */ "./node_modules/vue-animate-number/dist/vue-animate-number.min.js");
+/* harmony import */ var vue_animate_number__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_animate_number__WEBPACK_IMPORTED_MODULE_2__);
 
 
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_animate_number__WEBPACK_IMPORTED_MODULE_2___default.a);
 
 if (document.getElementById('guestHideMailApp')) {
   var guestHideMailApp = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     el: '#guestHideMailApp',
     components: {
       GuestHideEmailId: _components_emails_GuestHideEmailId__WEBPACK_IMPORTED_MODULE_1__["default"]
+    },
+    methods: {
+      formatter: function formatter(num) {
+        return num.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
     }
   });
 }
