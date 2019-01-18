@@ -23,12 +23,12 @@ Route::middleware(['auth:api'])->group(function() {
         'show'
     ]]);
 
-    // Route::post('/profile', 'UserController@update')->name('users.update');
     Route::post('/users/{user}/toggle-suspension', 'UserController@toggleSuspension')->name('users.toggleSuspension');
     Route::resource('/users','UserController', ['except'=>[
         'store',
         'destroy',
-        'edit'
+        'edit',
+        'create',
     ]]);
 
     Route::fallback(function(){
