@@ -8,6 +8,9 @@ use App\Rules\HashUnique;
 use App\Rules\IsCurrentUser;
 use Illuminate\Support\Facades\Hash;
 
+use App\Notifications\VerifyNewEmailId;
+use App\Notifications\NewLoginEmailId;
+
 class UserController extends Controller
 {
     public function info(Request $request)
@@ -26,12 +29,32 @@ class UserController extends Controller
             'current_password' => ['required', 'string', new IsCurrentUser]
         ]);
 
+        $message = 'Profile updated successfully.';
+
         $user->name = $request->name;
-        $user->email = $request->email;
+
         if($request->filled('password'))
             $user->password = Hash::make($request->password);
+        
+        $small_email = strtolower($request->email);
+        if($small_email != $user->email)
+        {
+            $user->notify(new VerifyNewEmailId($small_email));
+            $message .= ' You will receive a verification link in your new email. You will need to click the link in the mail to update the email ID in your profile.';
+        }
+        
         $user->save();
 
-        return response(['message'=>'Profile updated successfully','user'=>$user->fresh()]);
+        return response(['message'=>$message,'user'=>$user->fresh()]);
+    }
+
+    public function changeEmail(Request $request, User $user)
+    {
+        $this->authorize('changeEmail', $user);
+        
+        $user->email = $request->email;
+        $user->save();
+        $user->notify(new NewLoginEmailId());
+        return redirect('/profile');
     }
 }

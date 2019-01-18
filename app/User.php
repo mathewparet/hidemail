@@ -7,6 +7,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 
+use App\Events\UserUpdating;
+use App\Events\UserUpdated;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasApiTokens;
@@ -46,8 +49,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function setEmailAttribute($value)
     {
-        $this->attributes['email_hash'] = sha1($value);
-        $this->attributes['email'] = encrypt($value);
+        $small_email = strtolower($value);
+        
+        $this->attributes['email_hash'] = sha1($small_email);
+        $this->attributes['email'] = encrypt($small_email);
     }
 
     public function getEmailAttribute()

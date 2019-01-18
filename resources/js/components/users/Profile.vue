@@ -23,7 +23,7 @@
                         <div class="col-md-6">
                             <input id="email" type="email" class="form-control" :class="{'is-invalid': profileForm.errors.has('email')}" name="email" v-model="profileForm.email" autofocus>
                             <b-alert class="mt-3" show variant="warning" v-if="!profileForm.busy && profileForm.email != this.user.email">
-                                Your new email address will not be verified. It is up to you to ensure you are providing the correct email address. If a wrong email address is provided you might lose access to your account permanently.
+                                Once you submit this form, you will receive a verification link in your new email Id. You will need to click on the verification link in the email in order to complete the email ID updation process. Until this is done, your profile / login will still be {{this.user.email}}.
                             </b-alert>
                             <span class="invalid-feedback" style="display: block;">
                                 <strong>{{ profileForm.errors.get('email') }}</strong>
