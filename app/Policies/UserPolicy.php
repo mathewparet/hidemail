@@ -43,6 +43,6 @@ class UserPolicy
 
     public function index(User $user)
     {
-        return $user->id == 1;
+        return $user->id === 1;
     }
 }

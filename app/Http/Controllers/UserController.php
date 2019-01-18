@@ -124,7 +124,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $this->authorize('index', App\User::class);
+        $this->authorize('index', User::class);
 
         $users = $request->filled('filter') ? User::like($request->query('filter')) : new User();
         $users = $users->orderBy('created_at','desc')->paginate(config('app.page_size'));
