@@ -45,4 +45,9 @@ class UserPolicy
     {
         return $user->id === 1;
     }
+
+    public function link(User $user, User $model)
+    {
+        return $user->id === $model->id;
+    }
 }

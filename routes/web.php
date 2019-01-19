@@ -22,8 +22,10 @@ Route::get('/emails/{email}','RevealEmailController@show')->name('emails.reveal'
 
 Route::get('/users/{user}/change-email', 'UserController@changeEmail')->name('user.changeEmail')->middleware(['signed','auth']);
 
-Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider')->name('login.socialite');
-Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('/login/{provider}', 'Auth\LoginController@redirectToProvider')->name('login.socialite');
+Route::get('/login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::get('/users/{user}/link', 'SocialProviderUserController@link')->name('social.link')->middleware(['signed','web','auth']);
 
 // below must be the last one
 Route::get('/{vue_capture?}', 'HomeController@index')->where('vue_capture', '[\/\w\.-]*');

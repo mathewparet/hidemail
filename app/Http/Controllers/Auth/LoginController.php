@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 use Socialite;
 use App\User;
+use App\SocialProviderUser;
+use Hash;
+use DB;
+use Illuminate\Support\Facades\URL;
+
 class LoginController extends Controller
 {
     /*
@@ -56,18 +61,44 @@ class LoginController extends Controller
                         ->redirect();
     }
 
-    private function getUserFromResponse($response_user)
+    private function getUserFromResponse($response_user, $provider)
     {
-        if(!$response_user->getEmail() || strlen($response_user->getEmail()) === 0)
-        {
-            return redirect()->route('login')->withErrors(['email'=>["Email ID missing in response."]]);
-        }
+        $user = null;
 
-        $user = User::where('email_hash', 'like', sha1($response_user->getEmail()))->first();
-
-        if(!$user)
+        $SPUser = SocialProviderUser::whereProviderId($response_user->getId())->first();
+        
+        if($SPUser)
+            $user = $SPUser->user()->first();
+        else
         {
-            $user = User::create(['name'=>$response_user->getName(), 'email'=>$response_user->getEmail(), 'password'=>Hash::make(str_random(9))]);
+            if(!$response_user->getEmail() || strlen($response_user->getEmail()) === 0)
+                return redirect()->route('login')->withErrors(['general'=>["Email ID missing in response from ".$provider.'.']]);
+
+            $user = User::whereEmailHash(sha1($response_user->getEmail()))->first();
+            if($user)
+            {
+                $url = URL::temporarySignedRoute(
+                    'social.link', 
+                    now()->addHours(config('app.sign_expiry.short')),
+                    [
+                        'user'=>$user->id,
+                        'provider'=>$provider, 
+                        'email'=>$response_user->getEmail(),
+                        'name'=>$response_user->getName(),
+                        'provider_id'=>$response_user->getId(),
+                    ]
+                );
+                request()->session()->put('_old_input.email', $response_user->getEmail());
+                request()->session()->put('loginMessage', 'A user account with '.$response_user->getEmail().' already exists. Please login in order to associate your account with '.$provider.'.');
+                return redirect($url);
+            }
+
+            $user = DB::transaction(function() use($user, $response_user, $provider){
+                $user = User::create(['name'=>$response_user->getName(), 'email'=>$response_user->getEmail(), 'password'=>Hash::make(str_random(9))]);
+                $user->markEmailAsVerified();
+                $user->addProvider(new SocialProviderUser(['provider'=>$provider, 'provider_id'=>$response_user->getId()]));
+                return $user;
+            });
         }
 
         if(!$user->suspended)
@@ -75,14 +106,14 @@ class LoginController extends Controller
             auth()->login($user);
             return redirect()->intended($this->redirectPath());
         }
-        return redirect()->route('login')->withErrors(['email'=>['Your account is suspended.']]);
+        return redirect()->route('login')->withErrors(['general'=>['Your account is suspended.']]);
     }
 
     public function handleProviderCallback($provider)
     {
-        $fb_user = Socialite::driver($provider)->user();
+        $user = Socialite::driver($provider)->user();
 
-        return $this->getUserFromResponse($fb_user);
+        return $this->getUserFromResponse($user, $provider);
     }
 
 }

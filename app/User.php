@@ -81,4 +81,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $query->where('name','like','%'.$filter.'%')
             ->orWhere('email_hash',sha1($filter));
     }
+
+    public function providers()
+    {
+        return $this->hasMany(SocialProviderUser::class);
+    }
+
+    public function addProvider(SocialProviderUser $provider)
+    {
+        return $this->providers()->save($provider);
+    }
 }
