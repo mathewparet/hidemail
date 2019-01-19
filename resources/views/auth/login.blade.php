@@ -51,7 +51,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row mb-2">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
@@ -64,8 +64,12 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                <a href="{{route('login.socialite', ['provider'=>'facebook'])}}" class="btn btn-clearfacebook"><i class="fab fa-facebook-square"></i> Facebook</a>
+                            </div>
+                        </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>
