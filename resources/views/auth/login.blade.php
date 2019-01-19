@@ -66,7 +66,11 @@
                         </div>
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <a href="{{route('login.socialite', ['provider'=>'facebook'])}}" class="btn btn-clearfacebook"><i class="fab fa-facebook-square"></i> Facebook</a>
+                                @foreach(config('services.social') as $key => $social)
+                                    @if($social['enabled'])
+                                        <a href="{{route('login.socialite', ['provider'=>$key])}}" class="btn btn-default"><i class="{{$social['class']}}"></i> {{$social['name']}}</a>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </form>
