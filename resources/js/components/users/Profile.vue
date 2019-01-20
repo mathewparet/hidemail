@@ -74,7 +74,7 @@
                     <span v-if="loadingSocial==false && this.user.id === this.propUserId">
                         <hr>
                         <div class="form-group row mb-0" v-for="provider in this.socialProviders" :key="provider.id">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-6 offset-md-4" v-if="provider.enabled === true">
                                 <a class="btn btn-default" v-if="!providerLinked[provider.id]" :href="'/login/'+provider.id"><i :class="provider.class"></i> Link {{provider.name}} account</a>
                                 <a class="btn btn-default" v-else @click="delinkSocialAccount(provider.id)"><i :class="provider.class"></i> Delink {{provider.name}}</a>
                             </div>
