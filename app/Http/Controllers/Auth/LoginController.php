@@ -54,6 +54,13 @@ class LoginController extends Controller
         return ['email_hash' => sha1($request->email), 'password' => $request->password, 'suspended' => false];
     }
 
+    /**
+     * Redirect user to Socialite Provider's endpoint
+     * 
+     * @param string $provider
+     * 
+     * @returns redirection to provider endpoint
+     */
     public function redirectToProvider($provider)
     {
         return Socialite::driver($provider)
@@ -61,44 +68,92 @@ class LoginController extends Controller
                         ->redirect();
     }
 
-    private function getUserFromResponse($response_user, $provider)
+    /**
+     * Create a local user account from social account
+     * 
+     * @param Object $social - object representing response from the provider
+     * @param String $provider - E.g. facebook or google
+     * 
+     * @return \App\User $user
+     */
+    private function createUserFromSocialAccount($social, $provier)
+    {
+        return DB::transaction(function() use($social, $provider){
+            $user = User::create(['name'=>$social->getName(), 'email'=>$social->getEmail(), 'password'=>Hash::make(str_random(9))]);
+            $user->markEmailAsVerified();
+            $user->addProvider(new SocialProviderUser(['provider'=>$provider, 'provider_id'=>$social->getId()]));
+            return $user;
+        });
+    }
+
+    /**
+     * Set required session variables
+     * 1. _old_input.email - the value to pre-fill the login email
+     * 2. loginMessage - a message to be shown to the user at login screen
+     * 
+     * @param String $social - object representing response form social login provider
+     * @param String $provider - the social login provider key. E.g. facebook, google
+     * 
+     * @return void
+     */
+    private function setSessionVariables($social, $provider)
+    {
+        request()->session()->put('_old_input.email', $social->getEmail());
+        request()->session()->put('loginMessage', 'A user account with '.$social->getEmail().' already exists. Please login in order to associate your account with '.$provider.'.');
+    }
+
+    /**
+     * Get signed url to link existing account to provider account
+     * 
+     * @param \App\User $user
+     * @param String $provider - the provider key. E.g. facebook or google
+     * @param Object $social - object representing response from provider
+     * 
+     * @returns String $url
+     */
+    private function prepareSignedUrlToLinkExistingAccount(User $user, $provider, $social)
+    {
+        return URL::temporarySignedRoute(
+                'social.link', 
+                now()->addHours(config('app.sign_expiry.short')),
+                [
+                    'user'=>$user->id,
+                    'provider'=>$provider, 
+                    'email'=>$social->getEmail(),
+                    'name'=>$social->getName(),
+                    'provider_id'=>$social->getId(),
+                ]
+            );
+    }
+
+    public function handleProviderCallback($provider)
     {
         $user = null;
-
-        $SPUser = SocialProviderUser::whereProviderId($response_user->getId())->first();
+        
+        $social = Socialite::driver($provider)->user();
+        
+        $SPUser = SocialProviderUser::where([
+            'provider'=>$provider, 
+            'provider_id'=>$social->getId()
+            ])
+            ->first();
         
         if($SPUser)
             $user = $SPUser->user()->first();
         else
         {
-            if(!$response_user->getEmail() || strlen($response_user->getEmail()) === 0)
+            if(!$social->getEmail() || strlen($social->getEmail()) === 0)
                 return redirect()->route('login')->withErrors(['general'=>["Email ID missing in response from ".$provider.'.']]);
 
-            $user = User::whereEmailHash(sha1($response_user->getEmail()))->first();
+            $user = User::whereEmailHash(sha1($social->getEmail()))->first();
+
             if($user)
             {
-                $url = URL::temporarySignedRoute(
-                    'social.link', 
-                    now()->addHours(config('app.sign_expiry.short')),
-                    [
-                        'user'=>$user->id,
-                        'provider'=>$provider, 
-                        'email'=>$response_user->getEmail(),
-                        'name'=>$response_user->getName(),
-                        'provider_id'=>$response_user->getId(),
-                    ]
-                );
-                request()->session()->put('_old_input.email', $response_user->getEmail());
-                request()->session()->put('loginMessage', 'A user account with '.$response_user->getEmail().' already exists. Please login in order to associate your account with '.$provider.'.');
-                return redirect($url);
+                $this->setSessionVariables($social, $provider);
+                return redirect($this->prepareSignedUrlToLinkExistingAccount($user, $provider, $social));
             }
 
-            $user = DB::transaction(function() use($user, $response_user, $provider){
-                $user = User::create(['name'=>$response_user->getName(), 'email'=>$response_user->getEmail(), 'password'=>Hash::make(str_random(9))]);
-                $user->markEmailAsVerified();
-                $user->addProvider(new SocialProviderUser(['provider'=>$provider, 'provider_id'=>$response_user->getId()]));
-                return $user;
-            });
+            $user = $this->createUserFromSocialAccount($social, $provider);
         }
 
         if(!$user->suspended)
@@ -107,13 +162,6 @@ class LoginController extends Controller
             return redirect()->intended($this->redirectPath());
         }
         return redirect()->route('login')->withErrors(['general'=>['Your account is suspended.']]);
-    }
-
-    public function handleProviderCallback($provider)
-    {
-        $user = Socialite::driver($provider)->user();
-
-        return $this->getUserFromResponse($user, $provider);
     }
 
 }
