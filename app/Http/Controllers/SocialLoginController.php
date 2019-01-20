@@ -79,9 +79,15 @@ class SocialLoginController extends Controller
                 $user = $SPUser->user()->first();
             else
             {
+                if(request()->user())
+                {
+                    request()->user()->addSocialLogin(new SocialLogin(['provider'=>$provider, 'provider_id'=>$social->getId()]));
+                    return redirect('/profile');
+                }
+
                 if(!$social->getEmail() || strlen($social->getEmail()) === 0)
                     return redirect()->route('login')->withErrors(['general'=>["Email ID missing in response from ".$provider.'.']]);
-    
+        
                 $user = User::whereEmailHash(sha1($social->getEmail()))->first();
     
                 if($user)
