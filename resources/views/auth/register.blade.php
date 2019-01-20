@@ -73,6 +73,16 @@
                                 </vue-recaptcha>
                             </div>
                         </div>
+                        <hr>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-12 text-center">
+                                @foreach(config('services.social') as $key => $social)
+                                    @if($social['enabled'])
+                                        <a href="{{route('login.socialite.redirect', ['provider'=>$key])}}" class="btn btn-default"><i class="{{$social['class']}}"></i> Register with {{$social['name']}}</a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
