@@ -71,6 +71,15 @@
                             <button class="btn btn-primary" type="submit" :disabled="profileForm.busy">Update Profile</button>
                         </div>
                     </div>
+                    <span v-if="loadingSocial==false && this.user.id === this.propUserId">
+                        <hr>
+                        <div class="form-group row mb-0" v-for="provider in this.socialProviders" :key="provider.id">
+                            <div class="col-md-6 offset-md-4">
+                                <a class="btn btn-default" v-if="!providerLinked[provider.id]" :href="'/login/'+provider.id"><i :class="provider.class"></i> Link {{provider.name}} account</a>
+                                <a class="btn btn-default" v-else @click="delinkSocialAccount(provider.id)"><i :class="provider.class"></i> Delink {{provider.name}}</a>
+                            </div>
+                        </div>
+                    </span>
                 </form>
             </div>
         </div>
@@ -94,6 +103,9 @@
                 }),
                 current_email: null,
                 user_id: null,
+                socialProviders: {},
+                loadingSocial: true,
+                socialLogins: [],
             };
         },
         computed: {
@@ -102,11 +114,20 @@
             {
                 return this.id ? this.id : this.user.id
             },
+            providerLinked()
+            {
+                let isLinked = {};
+                this.socialLogins.forEach(login => {
+                    isLinked[login.provider] = true;
+                });
+                return isLinked;
+            }
         },
         mounted()
         {
             this.profileForm.reset();
             this.fetchUserDetails(this.propUserId);
+            this.getSocialProviders();
         },
         beforeRouteUpdate (to, from, next) {
             this.fetchUserDetails(this.user.id);
@@ -114,12 +135,40 @@
         },
         methods: {
             ...mapMutations(['setUser']),
+            getSocialProviders()
+            {
+                axios.get('/api/social')
+                    .then(response => {
+                        this.socialProviders = response.data.social;
+                    })
+                    .catch(error => this.$awn.alert(error.message))
+                    .finally(() => this.loadingSocial = false);
+            },
+            delinkSocialAccount(provider)
+            {
+                let login = this.socialLogins.find(login => login.provider === provider);
+
+                axios.delete(`/api/users/${this.user_id}/social/${login.id}`)
+                    .then(response => {
+                        this.$awn.success(response.data.message);
+
+                        if(response.data.user.id === this.user.id)
+                            this.setUser(response.data.user);
+
+                        this.socialLogins = response.data.user.social_logins;
+                    })
+                    .catch(error => {
+                        this.$awn.alert(error.messge);
+                    });
+            },
             populateForm(user)
             {
                 this.profileForm.name = user.name;
                 this.profileForm.email = user.email;
                 this.current_email = user.email;
                 this.user_id = user.id
+                this.socialLogins = user.social_logins;
+                let self = this;
 
                 this.profileForm.busy = false;
             },

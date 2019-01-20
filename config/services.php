@@ -57,11 +57,13 @@ return [
             'enabled' => env('SOCIAL_FB', false),
             'name' => 'Facebook',
             'class' => 'fab fa-facebook',
+            'id' => 'facebook',
         ],
         'google' => [
             'enabled' => env('SOCIAL_GOOGLE', false),
             'name' => 'Google',
             'class' => 'fab fa-google',
+            'id' => 'google',
         ]
     ]
 

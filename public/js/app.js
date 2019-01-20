@@ -1555,6 +1555,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1569,43 +1578,82 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         current_password: null
       }),
       current_email: null,
-      user_id: null
+      user_id: null,
+      socialProviders: {},
+      loadingSocial: true,
+      socialLogins: []
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])(['user']), {
     propUserId: function propUserId() {
       return this.id ? this.id : this.user.id;
+    },
+    providerLinked: function providerLinked() {
+      var isLinked = {};
+      this.socialLogins.forEach(function (login) {
+        isLinked[login.provider] = true;
+      });
+      return isLinked;
     }
   }),
   mounted: function mounted() {
     this.profileForm.reset();
     this.fetchUserDetails(this.propUserId);
+    this.getSocialProviders();
   },
   beforeRouteUpdate: function beforeRouteUpdate(to, from, next) {
     this.fetchUserDetails(this.user.id);
     next();
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])(['setUser']), {
+    getSocialProviders: function getSocialProviders() {
+      var _this = this;
+
+      axios.get('/api/social').then(function (response) {
+        _this.socialProviders = response.data.social;
+      }).catch(function (error) {
+        return _this.$awn.alert(error.message);
+      }).finally(function () {
+        return _this.loadingSocial = false;
+      });
+    },
+    delinkSocialAccount: function delinkSocialAccount(provider) {
+      var _this2 = this;
+
+      var login = this.socialLogins.find(function (login) {
+        return login.provider === provider;
+      });
+      axios.delete("/api/users/".concat(this.user_id, "/social/").concat(login.id)).then(function (response) {
+        _this2.$awn.success(response.data.message);
+
+        if (response.data.user.id === _this2.user.id) _this2.setUser(response.data.user);
+        _this2.socialLogins = response.data.user.social_logins;
+      }).catch(function (error) {
+        _this2.$awn.alert(error.messge);
+      });
+    },
     populateForm: function populateForm(user) {
       this.profileForm.name = user.name;
       this.profileForm.email = user.email;
       this.current_email = user.email;
       this.user_id = user.id;
+      this.socialLogins = user.social_logins;
+      var self = this;
       this.profileForm.busy = false;
     },
     getOtherUserInformation: function getOtherUserInformation(userId) {
-      var _this = this;
+      var _this3 = this;
 
       axios.get("/api/users/".concat(userId)).then(function (response) {
-        _this.populateForm(response.data.user);
+        _this3.populateForm(response.data.user);
       }).catch(function (error) {
-        if (error.response.status == 403) _this.$awn.alert("You are not authorized to to load this profile.");
+        if (error.response.status == 403) _this3.$awn.alert("You are not authorized to to load this profile.");
 
-        _this.$router.push({
+        _this3.$router.push({
           name: 'emails.index'
         });
       }).finally(function () {
-        _this.profileForm.busy = false;
+        _this3.profileForm.busy = false;
       });
     },
     fetchUserDetails: function fetchUserDetails(userId) {
@@ -1613,16 +1661,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (this.user.id === userId) this.populateForm(this.user);else this.getOtherUserInformation(userId);
     },
     saveProfile: function saveProfile() {
-      var _this2 = this;
+      var _this4 = this;
 
       this.profileForm.patch("/api/users/".concat(this.user_id)).then(function (response) {
-        if (response.user.id === _this2.user.id) _this2.setUser(response.user);
+        if (response.user.id === _this4.user.id) _this4.setUser(response.user);
 
-        _this2.$router.go(-1);
+        _this4.$router.go(-1);
 
-        _this2.$awn.success(response.message);
+        _this4.$awn.success(response.message);
       }).catch(function (error) {
-        _this2.$awn.alert(error.message);
+        _this4.$awn.alert(error.message);
       });
     }
   })
@@ -5028,7 +5076,62 @@ var render = function() {
                   [_vm._v("Update Profile")]
                 )
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.loadingSocial == false && this.user.id === this.propUserId
+              ? _c(
+                  "span",
+                  [
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm._l(this.socialProviders, function(provider) {
+                      return _c(
+                        "div",
+                        {
+                          key: provider.id,
+                          staticClass: "form-group row mb-0"
+                        },
+                        [
+                          _c("div", { staticClass: "col-md-6 offset-md-4" }, [
+                            !_vm.providerLinked[provider.id]
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn btn-default",
+                                    attrs: { href: "/login/" + provider.id }
+                                  },
+                                  [
+                                    _c("i", { class: provider.class }),
+                                    _vm._v(
+                                      " Link " +
+                                        _vm._s(provider.name) +
+                                        " account"
+                                    )
+                                  ]
+                                )
+                              : _c(
+                                  "a",
+                                  {
+                                    staticClass: "btn btn-default",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.delinkSocialAccount(provider.id)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", { class: provider.class }),
+                                    _vm._v(" Delink " + _vm._s(provider.name))
+                                  ]
+                                )
+                          ])
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              : _vm._e()
           ]
         )
       ])

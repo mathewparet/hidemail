@@ -18,6 +18,15 @@ class SocialLoginController extends Controller
     use RedirectsUsers;
 
     /**
+     * Return socilate config to JS object
+     */
+    public function config()
+    {
+        $social = config('services.social');
+        return response(compact('social'));
+    }
+
+    /**
      * Link a user to his social profile
      * 
      * @param Illuminate\Http\Request $request
@@ -154,5 +163,17 @@ class SocialLoginController extends Controller
                     'provider_id'=>$social->getId(),
                 ]
             );
+    }
+
+    public function destroy(Request $request, User $user, SocialLogin $socialLogin)
+    {
+        $this->authorize('deLink', $user);
+
+        if(!$user->owns($socialLogin))
+            abort(403, 'Unauthorized action');
+
+        $socialLogin->delete();
+
+        return response(['message' => 'Removed '.$socialLogin->provider.' link from your account.', 'user'=>$user->fresh()]);
     }
 }

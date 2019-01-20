@@ -30,6 +30,7 @@ Route::middleware(['auth:api'])->group(function() {
         'edit',
         'create',
     ]]);
+    Route::delete('/users/{user}/social/{socialLogin}', 'SocialLoginController@destroy');
 
     Route::get('/dashboard', 'AdminDashboardController')->name('dashboard');
 
@@ -41,3 +42,4 @@ Route::middleware(['auth:api'])->group(function() {
 
 Route::post('/emails/{email}','RevealEmailController@reveal')->name('emails.check');
 Route::post('/guestEmail', 'GuestEmailController@store')->name('guestEmails.store');
+Route::get('/social', 'SocialLoginController@config')->name('login.socialite.config');
