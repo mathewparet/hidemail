@@ -115,7 +115,7 @@ class SocialLoginController extends Controller
      * 
      * @return \App\User $user
      */
-    private function createUserFromSocialAccount($social, $provier)
+    private function createUserFromSocialAccount($social, $provider)
     {
         return DB::transaction(function() use($social, $provider){
             $user = User::create(['name'=>$social->getName(), 'email'=>$social->getEmail(), 'password'=>Hash::make(str_random(9))]);
