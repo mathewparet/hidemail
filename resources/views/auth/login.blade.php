@@ -66,11 +66,12 @@
                                 @endif
                             </div>
                         </div>
+                        <hr>
                         <div class="form-group row mb-0">
-                            <div class="col-md-8 offset-md-4">
+                            <div class="col-md-12 text-center">
                                 @foreach(config('services.social') as $key => $social)
                                     @if($social['enabled'])
-                                        <a href="{{route('login.socialite.redirect', ['provider'=>$key])}}" class="btn btn-default"><i class="{{$social['class']}}"></i> {{$social['name']}}</a>
+                                        <a href="{{route('login.socialite.redirect', ['provider'=>$key])}}" class="btn btn-default"><i class="{{$social['class']}}"></i> Login with {{$social['name']}}</a>
                                     @endif
                                 @endforeach
                             </div>
