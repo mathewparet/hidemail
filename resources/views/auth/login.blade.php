@@ -10,7 +10,9 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
+                        @if(Session::has('loginMessage'))
+                            <div class="alert alert-info">{{Session::get('loginMessage')}}</div>
+                        @endif
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
@@ -51,7 +53,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row mb-2">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
@@ -64,8 +66,16 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-8 offset-md-4">
+                                @foreach(config('services.social') as $key => $social)
+                                    @if($social['enabled'])
+                                        <a href="{{route('login.socialite.redirect', ['provider'=>$key])}}" class="btn btn-default"><i class="{{$social['class']}}"></i> {{$social['name']}}</a>
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
                     </form>
-                </div>
             </div>
         </div>
     </div>
