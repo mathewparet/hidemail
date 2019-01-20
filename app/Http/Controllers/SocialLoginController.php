@@ -29,7 +29,7 @@ class SocialLoginController extends Controller
     {
         $this->authorize('link', $user);
         
-        $user->addProvider(new SocialLogin(['provider'=>$request->query('provider'), 'provider_id'=>$request->query('provider_id')]));
+        $user->addSocialLogin(new SocialLogin(['provider'=>$request->query('provider'), 'provider_id'=>$request->query('provider_id')]));
         return redirect('/profile');
     }
 
@@ -111,7 +111,7 @@ class SocialLoginController extends Controller
         return DB::transaction(function() use($social, $provider){
             $user = User::create(['name'=>$social->getName(), 'email'=>$social->getEmail(), 'password'=>Hash::make(str_random(9))]);
             $user->markEmailAsVerified();
-            $user->addProvider(new SocialLogin(['provider'=>$provider, 'provider_id'=>$social->getId()]));
+            $user->addSocialLogin(new SocialLogin(['provider'=>$provider, 'provider_id'=>$social->getId()]));
             return $user;
         });
     }

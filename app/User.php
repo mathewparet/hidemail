@@ -36,6 +36,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'verified'
     ];
 
+    protected $with = [
+        'socialLogins'
+    ];
+
     public function emails()
     {
         return $this->hasMany(Email::class);
@@ -82,13 +86,20 @@ class User extends Authenticatable implements MustVerifyEmail
             ->orWhere('email_hash',sha1($filter));
     }
 
-    public function providers()
+    public function socialLogins()
     {
         return $this->hasMany(SocialLogin::class);
     }
 
-    public function addProvider(SocialLogin $provider)
+    /**
+     * Add a new social login and attach it to the user
+     * 
+     * @param \App\SocialLogin $social_login
+     * 
+     * @return \App\SocialLogin 
+     */
+    public function addSocialLogin(SocialLogin $social_login)
     {
-        return $this->providers()->save($provider);
+        return $this->socialLogins()->save($social_login);
     }
 }
