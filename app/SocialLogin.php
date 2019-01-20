@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SocialProviderUser extends Model
+class SocialLogin extends Model
 {
     protected $fillable =[
         'provider',

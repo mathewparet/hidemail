@@ -84,10 +84,10 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function providers()
     {
-        return $this->hasMany(SocialProviderUser::class);
+        return $this->hasMany(SocialLogin::class);
     }
 
-    public function addProvider(SocialProviderUser $provider)
+    public function addProvider(SocialLogin $provider)
     {
         return $this->providers()->save($provider);
     }

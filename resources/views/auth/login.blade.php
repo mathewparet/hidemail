@@ -70,7 +70,7 @@
                             <div class="col-md-8 offset-md-4">
                                 @foreach(config('services.social') as $key => $social)
                                     @if($social['enabled'])
-                                        <a href="{{route('login.socialite', ['provider'=>$key])}}" class="btn btn-default"><i class="{{$social['class']}}"></i> {{$social['name']}}</a>
+                                        <a href="{{route('login.socialite.redirect', ['provider'=>$key])}}" class="btn btn-default"><i class="{{$social['class']}}"></i> {{$social['name']}}</a>
                                     @endif
                                 @endforeach
                             </div>
