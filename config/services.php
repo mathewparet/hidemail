@@ -40,4 +40,31 @@ return [
         ],
     ],
 
+    'facebook' => [
+        'client_id' => env('FB_CLIENT_ID'),
+        'client_secret' => env('FB_CLIENT_SECRET'),
+        'redirect' => '/login/facebook/callback'
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => '/login/google/callback'
+    ],
+
+    'social' => [
+        'facebook' => [
+            'enabled' => env('SOCIAL_FB', false),
+            'name' => 'Facebook',
+            'class' => 'fab fa-facebook',
+            'id' => 'facebook',
+        ],
+        'google' => [
+            'enabled' => env('SOCIAL_GOOGLE', false),
+            'name' => 'Google',
+            'class' => 'fab fa-google',
+            'id' => 'google',
+        ]
+    ]
+
 ];
