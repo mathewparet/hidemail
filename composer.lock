@@ -1767,16 +1767,16 @@
         },
         {
             "name": "mathewparet/laravel-app-version",
-            "version": "v1.0.3",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mathewparet/laravel-app-version.git",
-                "reference": "267915697d9f0f7fc090303151c3b19ea7692ce7"
+                "reference": "f794ca14c46a1c012e1987075f1ac1b1b6d13d67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mathewparet/laravel-app-version/zipball/267915697d9f0f7fc090303151c3b19ea7692ce7",
-                "reference": "267915697d9f0f7fc090303151c3b19ea7692ce7",
+                "url": "https://api.github.com/repos/mathewparet/laravel-app-version/zipball/f794ca14c46a1c012e1987075f1ac1b1b6d13d67",
+                "reference": "f794ca14c46a1c012e1987075f1ac1b1b6d13d67",
                 "shasum": ""
             },
             "type": "library",
@@ -1796,7 +1796,7 @@
                 }
             ],
             "description": "A quick package that returns the app version from git tag and build details",
-            "time": "2019-01-21T09:21:00+00:00"
+            "time": "2019-01-21T09:40:45+00:00"
         },
         {
             "name": "monolog/monolog",
