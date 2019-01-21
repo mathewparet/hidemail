@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "bffed0c0279412edff15c8a4f18cd55a",
+    "content-hash": "365754e58c35ea7c62649ba9783fb2a9",
     "packages": [
         {
             "name": "defuse/php-encryption",
@@ -1764,6 +1764,39 @@
                 "server"
             ],
             "time": "2018-11-21T21:42:43+00:00"
+        },
+        {
+            "name": "mathewparet/laravel-app-version",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mathewparet/laravel-app-version.git",
+                "reference": "bcbf365c1971b4a611d0821fac70718a4052c466"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mathewparet/laravel-app-version/zipball/bcbf365c1971b4a611d0821fac70718a4052c466",
+                "reference": "bcbf365c1971b4a611d0821fac70718a4052c466",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "mathewparet\\LaravelAppVersion\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathew Paret",
+                    "email": "mathewparet@gmail.com"
+                }
+            ],
+            "description": "A quick package that returns the app version from git tag and build details",
+            "time": "2019-01-21T06:15:20+00:00"
         },
         {
             "name": "monolog/monolog",
