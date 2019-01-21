@@ -44,6 +44,9 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto" id="loggedInMenuApp">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://github.com/mathewparet/hidemail#readme" target="__blank">About</a>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
