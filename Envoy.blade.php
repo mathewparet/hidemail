@@ -83,6 +83,7 @@
 @task('clone_repo')
     echo 'Updating code...'
     cd {{ $app_dir }}
+    git checkout master
     git pull
     git checkout master
 @endtask
