@@ -57,46 +57,90 @@ class SocialLoginController extends Controller
     }
 
     /**
+     * Get internal user based ot the response from Social Login provider
+     * 
+     * @param string $provider - name of the provider - E.g. facebook, google
+     * @param object $social_login_response_user - response user object from the social login provider
+     */
+    private function getLocalUserFromSocialUser($provider, $social_login_response_user)
+    {
+        $SUser = SocialLogin::where([
+            'provider'=>$provider, 
+            'provider_id'=>$social_login_response_user->getId()
+            ])
+            ->first();
+        
+        return $SUser ? $SUser->user()->first() : null ;
+    }
+
+    /**
+     * Check if user is already logged in, if yes attach to the user
+     * 
+     * @param string $provier - the name of the provider
+     * @param $social_login_response_user  - response user object from the social login provider
+     * 
+     * @return mixed
+     */
+    private function attachLocalUserToSocialUserIfUserIsLoggdIn($provider, $social_login_response_user)
+    {
+        if(!request()->user())
+            return false;
+        
+        request()->user()->addSocialLogin(new SocialLogin(['provider'=>$provider, 'provider_id'=>$social_login_response_user->getId()]));
+        return redirect('/profile');
+    }
+
+    /**
+     * Confirm whether the social login providers login response have an email id
+     * 
+     * @param object $social_login_response_user
+     * 
+     * @return mixed
+     */
+    private function validateEmailIdInSocialResponse($social_login_response_user)
+    {
+        if(!$social_login_response_user->getEmail() || strlen($social_login_response_user->getEmail()) === 0)
+            return redirect()->route('login')->withErrors(['general'=>["Email ID missing in response from ".$provider.'.']]);
+        else
+            return false;
+    }
+
+    /**
      * Invoked when callback is received from social login provider
      * 
      * @param string $provider - the name of the provider
      */
     public function handleProviderCallback($provider)
     {
-        $user = null;
-
         try
         {
-            $social = Socialite::driver($provider)->user();
+            $social_login_response_user = Socialite::driver($provider)->user();
 
-            $SPUser = SocialLogin::where([
-                'provider'=>$provider, 
-                'provider_id'=>$social->getId()
-                ])
-                ->first();
+            $user = $this->getLocalUserFromSocialUser($provider, $social_login_response_user);
             
-            if($SPUser)
-                $user = $SPUser->user()->first();
-            else
+            if(!$user) // user is not already in system / not mapped
             {
-                if(request()->user())
-                {
-                    request()->user()->addSocialLogin(new SocialLogin(['provider'=>$provider, 'provider_id'=>$social->getId()]));
-                    return redirect('/profile');
-                }
+                // lets map the user to the current user if logged in
+                $redirect = $this->attachLocalUserToSocialUserIfUserIsLoggdIn($provider, $social_login_response_user);
+                if($redirect)
+                    return $redirect;
 
-                if(!$social->getEmail() || strlen($social->getEmail()) === 0)
-                    return redirect()->route('login')->withErrors(['general'=>["Email ID missing in response from ".$provider.'.']]);
-        
-                $user = User::whereEmailHash(sha1($social->getEmail()))->first();
+                // nope, user is not logged in. Lets confirm that an email ID was sent along with the response
+                $redirect = $this->validateEmailIdInSocialResponse($social_login_response_user);
+                if($redirect)
+                    return $redirect;
+
+                // yes, we have an email id. Lets check whether there is any account in the system with that email
+                $user = User::whereEmailHash(sha1($social_login_response_user->getEmail()))->first();
     
                 if($user)
                 {
-                    $this->setSessionVariables($social, $provider);
-                    return redirect($this->prepareSignedUrlToLinkExistingAccount($user, $provider, $social));
+                    $this->setSessionVariables($social_login_response_user, $provider);
+                    return redirect($this->prepareSignedUrlToLinkExistingAccount($user, $provider, $social_login_response_user));
                 }
     
-                $user = $this->createUserFromSocialAccount($social, $provider);
+                // nope - lets create a new user with the information received from the provider
+                $user = $this->createUserFromSocialAccount($social_login_response_user, $provider);
             }
     
             if(!$user->suspended)
@@ -108,7 +152,7 @@ class SocialLoginController extends Controller
         }
         catch(InvalidStateException $e)
         {
-            return redirect()->route('login')->with('loginMessage','Invalid state. Please try again!');
+            return redirect()->route('login')->with('loginMessage','Invalid state! Did you reload the page? Please try again!');
         }
         
     }
