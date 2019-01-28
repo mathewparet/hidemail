@@ -14,6 +14,13 @@
 
 @import '~startbootstrap-landing-page/css/landing-page.min.css';
 
+header.masthead {
+    position: relative;
+    background-color: #343a40;
+    background: url("/img/nightshot.jpg") no-repeat center center;
+    background-size: cover;
+}
+
 .links > a {
     color: #636b6f;
     padding: 0 25px;
