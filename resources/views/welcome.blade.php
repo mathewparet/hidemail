@@ -28,7 +28,7 @@
     <div class="container">
         <a class="navbar-brand" href="{{config('app.url')}}">{{config('app.name')}}</a>
         <div class="float-right links">
-            <a href="https://documenter.getpostman.com/view/5815935/RznJoGx5" target="__blank">API Documentation</a>
+            <a href="https://documenter.getpostman.com/view/5815935/RznJoGx5" target="__blank">API</a>
             <a href="https://github.com/mathewparet/hidemail#readme" target="__blank">About</a>
             @auth
                 <a href="{{ url('/home') }}">{{auth()->user()->name}}</a>
