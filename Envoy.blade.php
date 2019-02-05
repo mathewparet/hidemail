@@ -5,11 +5,34 @@
     $app_dir = '/home/runcloud/webapps/app-hidemail';
 @endsetup
 
+@story('destroy')
+    destroy_server
+    warn_destroy
+@endstory
+
+@task('warn_destroy')
+    echo "The below app WILL be deleted:"
+    echo $repository
+    echo $app_dir
+@endtask
+
+@task('destroy_server', ['confirm' => true])
+    echo "Destroying server..."
+    cd {{ $app_dir }}
+    rm -rf .git/
+    rm -rf .git*
+    rm -rf .editorconfig
+    rm -rf .env.example
+    mkdir public
+    chmod 755 public
+    echo "Done"
+@endtask
+
 @story('fresh')
     check_params
     fresh_clone
-    configure_environment
     run_composer
+    configure_environment
     generate_app_key
     run_migrations
     cache_app
@@ -19,7 +42,7 @@
 @endstory
 
 @story('deploy')
-	enable_maintenance_mode
+    enable_maintenance_mode
     clone_repo
     run_composer
     run_migrations
@@ -74,6 +97,7 @@
 
 @task('configure_environment')
     echo "Configuring environment..."
+    cd {{ $app_dir }}
     cp .env.example .env
     sed -i "s/DB_DATABASE=homestead/DB_DATABASE={{$database_name}}/g" .env
     sed -i "s/DB_USERNAME=homestead/DB_USERNAME={{$database_user}}/g" .env
@@ -95,27 +119,27 @@
 @endtask
 
 @task('run_migrations')
-	echo "Running migrations..."
+    echo "Running migrations..."
     cd {{ $app_dir }}
-	php artisan migrate --force
+    php artisan migrate --force
 @endtask
 
 @task('cache_app')
-	echo "Caching application..."
+    echo "Caching application..."
     cd {{ $app_dir }}
     php artisan cache:clear
-	php artisan config:cache
-	php artisan view:cache
+    php artisan config:cache
+    php artisan view:cache
 @endtask
 
 @task('manage_queue')
-	echo "Restarting Queues..."
+    echo "Restarting Queues..."
     cd {{ $app_dir }}
-	php artisan queue:restart
+    php artisan queue:restart
 @endtask
 
 @task('enable_maintenance_mode')
-	echo "Putting application in maintenance mode..."
+    echo "Putting application in maintenance mode..."
     cd {{ $app_dir }}
     @if($message)
         php artisan down --message="{{$message}}"
@@ -125,9 +149,9 @@
 @endtask
 
 @task('disable_maintenance_mode')
-	echo "Activating application..."
+    echo "Activating application..."
     cd {{ $app_dir }}
-	php artisan up
+    php artisan up
 @endtask
 
 @task('finished')
