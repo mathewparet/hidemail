@@ -8,7 +8,8 @@ use App\Rules\HashUnique;
 use App\Rules\IsCurrentUser;
 use Illuminate\Support\Facades\Hash;
 
-use App\Notifications\VerifyNewEmailId;
+use App\Mail\VerifyNewEmailId;
+use Illuminate\Support\Facades\Mail;
 use App\Notifications\NewLoginEmailId;
 
 class UserController extends Controller
@@ -59,8 +60,8 @@ class UserController extends Controller
 
         if($small_email != $user->email)
         {
-            $user->notify(new VerifyNewEmailId($small_email));
-            $message = 'You will receive a verification link in your new email. You will need to click the link in the mail to update the email ID in your profile.';
+            Mail::to($small_email)->send(new VerifyNewEmailId($user, $small_email));
+            $message = 'You will receive a confirmation link in your current email. You will need to click the link in the mail to update the email ID in your profile.';
         }
 
         return $message;
